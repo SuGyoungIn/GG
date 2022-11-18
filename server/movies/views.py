@@ -10,6 +10,8 @@ from .models import Movie, Genre
 def movies(request):
     movies = get_list_or_404(Movie)
     serializer = MovieSerializer(movies,many=True)
+    for d in serializer.data:
+        d.pop('vote_count')
     return Response(serializer.data)
     
 @api_view(['GET'])
