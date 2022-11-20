@@ -3,14 +3,14 @@
     <section class="vh-100 gradient-custom">
       <h1>{{ userName }}께 맞는 영화조각을 찾아보세요!</h1>
 
-      <div>
-        <img id="puz1" class="puzzle" src="/img/puzzle.png" alt="추천1" />
+      <div @click="moveToRecommend(1)">
+        <img id="puz1" class="puzzle" src="/img/puzzle1.png" alt="추천1" />
       </div>
-      <div>
-        <img id="puz2" class="puzzle" src="/img/puzzle 2.png" alt="추천1" />
+      <div @click="moveToRecommend(2)">
+        <img id="puz2" class="puzzle" src="/img/puzzle2.png" alt="추천1" />
       </div>
-      <div>
-        <img id="puz3" class="puzzle" src="/img/puzzle 3.png" alt="추천1" />
+      <div @click="moveToRecommend(3)">
+        <img id="puz3" class="puzzle" src="/img/puzzle3.png" alt="추천1" />
       </div>
     </section>
   </div>
@@ -23,11 +23,19 @@ export default {
       userName: "susu",
     };
   },
-  methods: {},
-};
+  methods: { 
+    moveToRecommend(num) {
+      const moveTo = 'recommend' + num.toString()
+      this.$router.push({name: moveTo})
+    }, },}
 </script>
 
 <style scoped>
+
+.home{
+  position: relative;
+}
+
 .gradient-custom {
   padding: 10px 10%;
   overflow: hidden;
@@ -55,45 +63,51 @@ h1 {
   text-align: center;
 }
 
-.puzzle{
-  position: absolute;
-  width:200px;
+.puzzle {
+  cursor: pointer;
+  height: 200px;
 }
 
 .puzzle:hover {
-  box-shadow: 10px 5px 5px yellow;
+  height: 230px;
+  transition: all 0.3s ease-in-out
 }
 
 #puz1 {
-  top: 250px;
+  position: absolute;
+  top: 550px;
   left: 300px;
   transform: rotateZ(30deg);
-  animation: movePuzzle 1.5s ease-in-out infinite;
+  animation: movePuzzle 1s ease-in-out infinite;
 }
 
-#puz2 {
-  top: 250px;
+#puz2{
+  position: absolute;
+  top: 550px;
+  right: 800px;
+  transform: rotateZ(120deg);
+  animation: movePuzzle 2s ease-in-out infinite;
+}
+
+#puz3 {
+  position: absolute;
+  top: 550px;
   right: 300px;
   transform: rotateZ(60deg);
   animation: movePuzzle 1.5s ease-in-out infinite;
 }
 
-#puz3 {
-  top: 350px;
-  right: 800px;
-  transform: rotateZ(120deg);
-  animation: movePuzzle 1.5s ease-in-out infinite;
-}
 
-@keyframes movePuzzle{
-  0%{
+
+@keyframes movePuzzle {
+  0% {
     top: 240px;
   }
-  50%{
-    top:260px;
+  50% {
+    top: 260px;
   }
-  100%{
-    top:240px;
+  100% {
+    top: 240px;
   }
 }
 </style>
