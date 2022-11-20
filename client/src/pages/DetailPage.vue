@@ -18,6 +18,7 @@
       <p>{{ movieDetailData?.release_date }}</p>
       <p>{{ movieDetailData?.runtime }}분</p>
       <p>
+        <b-form-rating v-model="value" readonly></b-form-rating>
         {{ movieDetailData?.vote_average }} /
         {{ movieDetailData?.vote_count }}명
       </p>
@@ -28,6 +29,7 @@
         <b-input-group :prepend="userName" class="mt-3">
           <b-form-input></b-form-input>
           <b-input-group-append>
+            <b-form-rating v-model="value"></b-form-rating>
             <b-button variant="info">등록</b-button>
           </b-input-group-append>
         </b-input-group>
@@ -48,6 +50,7 @@ export default {
       movieDetailData: {},
       imgBaseUrl: "",
       userName:"testName",
+      value:0,
     };
   },
   methods: {

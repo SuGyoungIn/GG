@@ -5,12 +5,14 @@
           {{ data.index + 1 }}
       </template>
       <template #cell(제목)="data">
-        <p >{{ data.item.제목 }}</p>
+
+        <p class="article" @click="moveTo(data.item.id)">{{ data.item.제목 }}</p>
       </template>
     </b-table>
   </div>
 </template>
 <script>
+
 export default {
   name: "ArticleList",
   created(){
@@ -22,19 +24,22 @@ export default {
       fields:["인덱스","제목", "작성자", "작성시간"],
     }
   },
+  components:{
+
+  },
   methods: {
     getItems(){
       const articlesData = this.$store.state.articles
       this.articles = articlesData
     },
-    moveTo(){
-
+    moveTo(id){
+      this.$router.push({name:'article', params:{article_id:id}})
     }
   }
 }
 </script>
 <style scoped>
-  tr {
+  .article {
     cursor: pointer;
   }
 </style>
