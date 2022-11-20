@@ -17,3 +17,8 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 
+class FindMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('id','title','original_title','poster_path')
+
