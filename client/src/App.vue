@@ -1,38 +1,45 @@
 <template>
-  <div id="app" class="">
-    <div class="bg-site">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
-        <!-- Container wrapper -->
-        <div class="container-fluid">
-          <!-- Collapsible wrapper -->
-          <div class="" id="navbarSupportedContent">
-            <!-- Navbar brand -->
-            <router-link to="/"
-              ><img src="/LOGO.png" alt="logo" style="width: 100px"
-            /></router-link>
-            <!-- Left links -->
-          </div>
-
-          <!-- Right elements -->
-          <div class="d-flex align-items-center">
-            <!-- Icon -->
-            <router-link class="mx-2" to="/community">커뮤니티</router-link>
-            <router-link class="mx-2" to="/login">로그인</router-link>
-            <router-link class="mx-2" to="/signup">회원가입</router-link>
-            <router-link class="mx-2" to="/mypage/:user_id">마이페이지</router-link>
-            <span class="mx-2" v-b-modal.searchModal> <img src="/img/search.png" alt="검색"> </span>
-            <!-- Avatar -->
-          </div>
-          <!-- Right elements -->
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Collapsible wrapper -->
+        <div class="" id="navbarSupportedContent">
+          <!-- Navbar brand -->
+          <router-link to="/"
+            ><img src="/LOGO.png" alt="logo" style="width: 100px"
+          /></router-link>
+          <!-- Left links -->
         </div>
-        <!-- Container wrapper -->
-      </nav>
 
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+          <!-- Icon -->
+          <router-link class="mx-2" to="/community">커뮤니티</router-link>
+          <router-link class="mx-2" to="/login">로그인</router-link>
+          <router-link class="mx-2" to="/signup">회원가입</router-link>
+          <b-avatar> </b-avatar>
+          <b-nav-item-dropdown text="SuSu">
+            <b-dropdown-item @click="movePage(myPage)">마이프로필</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
 
+         
 
-      <router-view />
-    </div>
+          <span class="mx-2" v-b-modal.searchModal>
+            <img src="/img/search.png" alt="검색" />
+          </span>
+          <!-- Avatar -->
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <router-view />
+
     <b-modal id="searchModal" title="검색" hide-footer size="xl">
       <b-container fluid>
         <b-row class="my-1">
@@ -158,6 +165,8 @@ export default {
         "TV 영화",
       ],
       selectedGenres: [],
+      user_id: 2,
+      myPage:"myPage",
     };
   },
   methods: {
@@ -166,6 +175,12 @@ export default {
         this.selectedGenres.push(genre);
       }
     },
+    movePage(destination){
+      const userId = this.user_id
+      if(destination==="myPage"){
+        this.$router.push({name: "mypage", params: {user_id: userId}})
+      }
+    }
   },
 };
 </script>
@@ -177,6 +192,13 @@ export default {
 #app {
   position: relative;
 }
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
   color: #333;

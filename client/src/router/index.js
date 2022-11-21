@@ -4,8 +4,13 @@ import HomeView from '../views/HomeView.vue'
 import CommunityView from '../views/CommunityView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
-import MyPageView from '../views/MyPageView.vue'
-import Recommend1View from '../views/Recommend1View.vue'
+import MyPage from '../pages/MyPage.vue'
+import RecommendOne from '../pages/RecommendOne.vue'
+import RecommendTwo from '../pages/RecommendTwo.vue'
+import RecommendThree from '../pages/RecommendThree.vue'
+import DetailPage from '../pages/DetailPage.vue'
+import ArticlePage from '../pages/ArticlePage.vue'
+
 
 Vue.use(VueRouter)
 
@@ -33,19 +38,43 @@ const routes = [
   {
     path: '/mypage/:user_id',
     name: 'mypage',
-    component: MyPageView
+    component: MyPage
   },
   {
     path: '/recommend1',
     name: 'recommend1',
-    component: Recommend1View
+    component: RecommendOne
   },
+  {
+    path: '/recommend2',
+    name: 'recommend2',
+    component: RecommendTwo
+  },
+  {
+    path: '/recommend3',
+    name: 'recommend3',
+    component: RecommendThree
+  },
+  {
+    path: '/detail/:movie_id',
+    name: 'detail',
+    component: DetailPage
+  },
+  {
+    path: '/article/:article_id',
+    name: 'article',
+    component: ArticlePage
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to,from, next)=>{
+  next()
 })
 
 export default router
