@@ -21,3 +21,4 @@ def movie(request,movie_pk):
     return Response(serializer.data)
 # Create your views here.
 
+ 
