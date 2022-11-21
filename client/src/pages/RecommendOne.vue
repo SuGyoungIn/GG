@@ -13,6 +13,9 @@ export default {
   components: {
     PosterCard
   },
+  created(){
+    this.getMovies()
+  },
   computed:{
      movies(){
       return this.$store.state.movies
@@ -23,7 +26,9 @@ export default {
     }
   },
   methods: {
-    
+    getMovies(){
+      this.$store.dispatch('getMovies')
+    }
   },
   
 }

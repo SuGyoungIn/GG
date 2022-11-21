@@ -1,6 +1,6 @@
 <template>
-  <div class="poster-card" @click="moveToDetail(movie.fields.id)">
-    <b-card :img-src="posterUrl + movie.fields.poster_path" img-alt="Image" overlay></b-card>
+  <div class="poster-card" @click="moveToDetail(movie.id)">
+    <b-card :img-src="posterUrl + movie.poster_path" img-alt="Image" overlay></b-card>
   </div>
 </template>
 <script>
