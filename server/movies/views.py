@@ -26,3 +26,4 @@ def find_movie(request):
     movies = get_list_or_404(Movie)
     serializer = FindMovieSerializer(movies,many=True)
     return Response(serializer.data)
+
