@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers.movies import MovieSerializer,SearchMovieSerializer
+from .serializers.genre import GenreSerializers
 from .models import Movie, Genre
 
 @api_view(['GET'])
@@ -22,6 +23,11 @@ def movie(request,movie_pk):
     return Response(serializer.data)
 # Create your views here.
 
+@api_view(['GET'])
+def genres(request):
+    genres=get_list_or_404(Genre)
+    serializer = GenreSerializers(genres,many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])  #비로그인, 돋보기 버튼누르면 통신
 def search_movie(request):

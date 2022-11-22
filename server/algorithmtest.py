@@ -40,15 +40,18 @@ def predict_rating(ratings_arr,item_sim_arr):
 ratings_pred = predict_rating(ratings_matrix.values,item_sim_df.values)
 ratings_pred_matrix = pd.DataFrame(data=ratings_pred,index=ratings_matrix.index,columns = ratings_matrix.columns)
 
-print(ratings_pred_matrix.head(3))
-
-
 def get_mse(pred,actual):
     pred=pred[actual.nonzero()].flatten()
-    actual[actual.nonzero()].flatten()
+    actual=actual[actual.nonzero()].flatten()
     return mean_squared_error(pred,actual)
 
-# MSE1 = get_mse(ratings_pred,ratings_matrix.values)
+MSE1 = get_mse(ratings_pred,ratings_matrix.values)
+
+def predict_rating_topsim(ratings_arr,item_sim_arr,N=20):
+    pred = np.zeros(ratings_arr.shape)
+
+    for col in range(ratings.arr.)
+
 
 # print(item_sim_df["Godfather, The (1972)"].sort_values(ascending=False)[1:6])
 
