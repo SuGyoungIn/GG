@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <div class="spinner" v-if="isLoading">
+      <b-spinner
+        variant="dark"
+        style="width: 3rem; height: 3rem"
+        label="Large Spinner"
+      ></b-spinner>
+    </div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
       <!-- Container wrapper -->
@@ -25,7 +32,7 @@
           >
           <b-nav-item-dropdown :text="username" v-if="isLogin">
             <b-dropdown-item @click="movePage(myPage)"
-              >마이프로필</b-dropdown-item
+              >마이페이지</b-dropdown-item
             >
             <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -39,127 +46,36 @@
       </div>
       <!-- Container wrapper -->
     </nav>
+    <!-- <div class="container" v-if="!isLoading">
+      
+    </div> -->
     <router-view />
-
-    <b-modal id="searchModal" title="검색" hide-footer size="xl">
-      <b-container fluid>
-        <b-row class="my-1">
-          <b-col sm="10">
-            <b-form-input
-              id="input-default"
-              placeholder="원하는 영화를 검색해보세요"
-            ></b-form-input>
-          </b-col>
-          <b-col sm="2">
-            <b-button>검색</b-button>
-          </b-col>
-        </b-row>
-      </b-container>
-      <hr />
-      <div>
-        <b-button v-b-toggle.collapse-1>상세설정</b-button>
-        <b-collapse id="collapse-1" class="mt-2">
-          <b-card>
-            <b-row>
-              <b-col sm="9">
-                <p class="card-text">장르</p>
-                <div>
-                  <b-button
-                    v-for="(genre, idx) in genres"
-                    :key="idx"
-                    @click="addGenre(genre)"
-                    >{{ genre }}</b-button
-                  >
-                </div>
-              </b-col>
-              <b-col sm="3">
-                <p class="card-text">별점</p>
-              </b-col>
-            </b-row>
-          </b-card>
-        </b-collapse>
-      </div>
-      <div>
-        <div>
-          <span>검색결과</span>
-
-          <span v-if="selectedGenres.length > 0"
-            ><b-button v-for="(selected, idx) in selectedGenres" :key="idx">{{
-              selected
-            }}</b-button></span
-          >
-        </div>
-        <b-container>
-          <b-row>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-          </b-row>
-        </b-container>
-      </div>
-    </b-modal>
+      <SearchModal />
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import SearchModal from "./components/SearchModal.vue";
 export default {
   created() {
-    this.userData(),
-    this.getUserData()
-  },
 
+    this.getUserData();
+  },
+  components: {
+    SearchModal,
+  },
   computed: {
     isLogin() {
       return this.$store.getters.isLogin;
     },
-
   },
   data() {
     return {
-      genres: [],
-      selectedGenres: [],
       user_id: 0,
       myPage: "myPage",
       username: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -177,15 +93,29 @@ export default {
     logOut() {
       this.$store.dispatch("logOut");
     },
-    userData() {
-      if (this.isLogin) {
-        this.$store.dispatch("getUserData");
-      }
+
+    getUserData() {
+      const API_URL = "http://127.0.0.1:8000";
+      this.isLoading = true;
+      axios({
+        method: "get",
+        url: `${API_URL}/username/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`,
+        },
+      })
+        .then((res) => {
+          this.$store.dispatch("pushUserData", res.data);
+          this.username = res.data.username;
+          this.user_id = res.data.user_pk;
+          this.isLoading = false;
+          console.log(this.isLoading)
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
     },
-    getUserData(){
-      this.username = this.$store.state.userData.username
-      this.user_id = this.$store.state.userData.user_pk
-    }
   },
 };
 </script>
@@ -212,5 +142,11 @@ a {
 .navbar {
   padding: 0 10% !important;
   background-color: #212529;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  z-index: 4;
 }
 </style>

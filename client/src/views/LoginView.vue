@@ -90,6 +90,7 @@ data() {
         username, password
       }
       this.$store.dispatch('logIn',payload)
+      
     },
   },
 

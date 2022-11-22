@@ -30,6 +30,7 @@ export default new Vuex.Store({
     LOG_OUT(state) {
       state.token = null;
       state.userData = [];
+      window.location.reload();
     },
   },
   actions: {
@@ -64,6 +65,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err);
+          alert("회원가입을 실패하였습니다.");
         });
     },
     logIn(context, payload) {
@@ -83,24 +85,15 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err);
+          alert("로그인을 실패하였습니다.");
         });
     },
     logOut(context) {
       context.commit("LOG_OUT");
     },
-    getUserData(context) {
-      axios({
-        method: "get",
-        url: `${API_URL}/username/`,
-        headers: {
-          Authorization: `Token ${this.state.token}`,
-        },
-      })
-        .then((res) => {
-          context.commit("USER_DATA", res.data);
-        })
-        .catch((err) => console.log(err));
-    },
+    pushUserData(context, userdata){
+      context.commit("USER_DATA", userdata)
+    }
   },
   getters: {
     isLogin(state) {
