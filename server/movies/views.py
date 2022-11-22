@@ -22,10 +22,6 @@ def movie(request,movie_pk):
     return Response(serializer.data)
 # Create your views here.
 
-<<<<<<< HEAD
- 
-=======
-
 @api_view(['GET'])  #비로그인, 돋보기 버튼누르면 통신
 def search_movie(request):
     movies = get_list_or_404(Movie)
@@ -50,5 +46,3 @@ def movie_likes(request,movie_pk):
             movie.like_users.add(request.user.pk)
             print('Add')
         return Response()
-    
->>>>>>> c8c0acd5fbe9d7bda1101f62c9223957fe5bbcef
