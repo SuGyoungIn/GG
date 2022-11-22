@@ -106,5 +106,33 @@ def get_sim_user(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_sim_items(request,):
-    pass
+def get_sim_items(request):
+    this_user=request.user.username
+    users = get_list_or_404(get_user_model())
+    movies = get_list_or_404(Movie)
+    comments = get_list_or_404(Comment)
+    columns = dict()
+    row = dict()
+    for user in users:
+        columns[user.username]=0
+    for movie in movies:
+        row[movie.id]=columns.copy()
+
+    for comment in comments:
+        print(comment.movie.id,comment.user.username,comment.stars)
+        row[comment.movie.id][comment.user.username]+=comment.stars
+
+    pprint(row)
+
+    for r in row.key():
+        pass
+
+
+    return Response()
+
+
+
+    
+    
+    
+    

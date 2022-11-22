@@ -8,5 +8,6 @@ urlpatterns = [
     path('<int:movie_pk>/',views.movie),
     path('<int:movie_pk>/comments/',views.comments),
     path('<int:movie_pk>/likes/',views.movie_likes,name="movie_likes"),
-    path('get_sim_user/',views.get_sim_user)
+    path('get_sim_user/',views.get_sim_user),
+    path('get_sim_items/',views.get_sim_items)
 ]
