@@ -1,4 +1,4 @@
-from ..models import Comment, Movie
+from ..models import Comment, Article
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .user import UserSerializer
@@ -8,13 +8,14 @@ class CommentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
 class CommentSerializer(serializers.ModelSerializer):
-    class MovieSerializer(serializers.ModelSerializer):
+    class ArticleSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Movie
+            model = Article
             fields = ('id', 'title', )
-    movie = MovieSerializer(read_only=True)
+    article = ArticleSerializer(read_only=True)
     user = UserSerializer(read_only=True)
     class Meta:
         model = Comment
-        exclude = ('recommends', )
+        fields = '__all__'
