@@ -7,6 +7,7 @@ from .serializers.article import ArticleListSerializer,ArticleSerializer
 from .serializers.comment import CommentListSerializer,CommentSerializer
 from .models import Article, Comment
 
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def article_list(request):
@@ -75,3 +76,4 @@ def comments(request, article_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save(article=article, user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
