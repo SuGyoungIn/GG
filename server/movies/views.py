@@ -13,6 +13,7 @@ def movies(request):
     serializer = MovieSerializer(movies,many=True)
     for d in serializer.data:
         d.pop('vote_count')
+    
     return Response(serializer.data)
 
 
@@ -20,6 +21,8 @@ def movies(request):
 def movie(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     serializer = MovieSerializer(movie)
+    print(serializer)
+    print(serializer.data)
     return Response(serializer.data)
 # Create your views here.
 
@@ -40,7 +43,7 @@ def search_movie(request):
 def movie_likes(request,movie_pk):
     print()
     print('here!!!!!!!!!!')
-    print(request.user)
+    print(request.user.username)
 
     movie = get_object_or_404(Movie,pk=movie_pk)
     if request.method=='GET':
