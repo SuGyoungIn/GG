@@ -4,37 +4,51 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+import sqlite3
+
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import mean_squared_error
 
-mpl.rc('font', family='NanumGothic')
-mpl.rc('axes', unicode_minus=False)
-
-sns.set(font='NanumGothic', rc={'axes.unicode_minus': False}, style='darkgrid')
-plt.rc('figure', figsize=(10, 8))
-
-warnings.filterwarnings('ignore')
-movies = pd.read_csv(
-    'c:/Users/multicampus/Desktop/ssafy8/03.학생용/fp/server/ml-latest-small/movies.csv')
-ratings = pd.read_csv(
-    'c:/Users/multicampus/Desktop/ssafy8/03.학생용/fp/server/ml-latest-small/ratings.csv')
-
-print(type(movies), movies)
+# mpl.rc('font',family='NanumGothic')
+# mpl.rc('axes',unicode_minus=False)
+# sns.set(font='NanumGothic', rc={'axes.unicode_minus':False}, style='darkgrid')
+# plt.rc('figure',figsize=(10,8))
+# warnings.filterwarnings('ignore')
 
 
-ratings_matrix = ratings.pivot_table("rating", "userId", "movieId")
 
-rating_movies = pd.merge(ratings, movies, on="movieId")
-ratings_matrix = rating_movies.pivot_table("rating", "userId", "title")
-ratings_matrix.fillna(0, inplace=True)
-ratings_matrix_T = ratings_matrix.T
+# con = sqlite3.connect('server\db.sqlite3')
+# cur = con.cursor()
+# query = cur.execute("SELECT * From movies_movie")
+
+# cols = [column[0] for column in query.description]
+
+# movies = pd.DataFrame.from_records(data=query.fetchall(), columns=cols)
+
+# print(race_result)
+movies=pd.read_csv('c:/Users/multicampus/Desktop/ssafy8/03.학생용/fp/server/ml-latest-small/movies.csv')
+
+# print(movies)
+
+ratings=pd.read_csv('c:/Users/multicampus/Desktop/ssafy8/03.학생용/fp/server/ml-latest-small/ratings.csv')
+
+# print('데이터 다 읽음')
+
+ratings_matrix=ratings.pivot_table("rating","userId","movieId")
+rating_movies=pd.merge(ratings,movies,on="movieId")
+ratings_matrix=rating_movies.pivot_table("rating","userId","title")
+ratings_matrix.fillna(0,inplace=True)
+ratings_matrix_T=ratings_matrix.T
 
 item_sim = cosine_similarity(ratings_matrix_T, ratings_matrix_T)
 item_sim_df = pd.DataFrame(
     item_sim, index=ratings_matrix_T.index, columns=ratings_matrix_T.index)
 
 
-def predict_rating(ratings_arr, item_sim_arr):
+print('진행중1')
+
+
+def predict_rating(ratings_arr,item_sim_arr):
     sum_sr = ratings_arr @ item_sim_arr
     sum_s_abs = np.array([np.abs(item_sim_arr).sum(axis=1)])
     ratings_pred = sum_sr/sum_s_abs
@@ -45,6 +59,14 @@ ratings_pred = predict_rating(ratings_matrix.values, item_sim_df.values)
 ratings_pred_matrix = pd.DataFrame(
     data=ratings_pred, index=ratings_matrix.index, columns=ratings_matrix.columns)
 
+
+print('진행중2')
+
+
+def get_mse(pred,actual):
+    pred=pred[actual.nonzero()].flatten()
+    actual=actual[actual.nonzero()].flatten()
+    return mean_squared_error(pred,actual)
 
 def get_mse(pred, actual):
     pred = pred[actual.nonzero()].flatten()
