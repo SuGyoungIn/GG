@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <section class="vh-100 gradient-custom">
-      <h1>{{ userName }}께 맞는 영화조각을 찾아보세요!</h1>
+      <h1>{{ userName }}님께 맞는 영화조각을 찾아보세요!</h1>
 
       <div @click="moveToRecommend(1)" @hover="addToRecommend(1)">
         <img id="puz1" class="puzzle" src="/img/puzzle1.png" alt="추천1" />
@@ -19,9 +19,10 @@
 
 <script>
 export default {
+  
   data() {
     return {
-      userName: "susu",
+      userName: "익명의 어피치",
       recommendName: "test test",
     };
   },

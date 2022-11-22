@@ -55,7 +55,7 @@ export default {
       movieDetailData: {},
       movieCredits: [],
       imgBaseUrl: "",
-      userName:"testName",
+      userName:"",
       value:0,
     };
   },

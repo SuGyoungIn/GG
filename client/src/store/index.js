@@ -1,95 +1,110 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate"
-import router from "../router"
+import createPersistedState from "vuex-persistedstate";
+import router from "../router";
 
 Vue.use(Vuex);
 
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = "http://127.0.0.1:8000";
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState(),
-  ],
+  plugins: [createPersistedState()],
   state: {
     token: null,
-    movies:[],
-    articles:[],
-    userdata:[],
+    movies: [],
+    articles: [],
+    userData: [],
   },
   mutations: {
-    GET_MOVIES(state, movies){
+    GET_MOVIES(state, movies) {
       state.movies = movies;
     },
-    SAVE_TOKEN(state, token){
+    SAVE_TOKEN(state, token) {
       state.token = token;
-      router.push({name: 'home'})
-      console.log('로그인됐삼')
+      router.push({ name: "home" });
+      console.log("로그인됐삼");
     },
-    USER_DATA(state, userdata){
-      state.userdata = userdata;
+    USER_DATA(state, userdata) {
+      state.userData = userdata;
     },
-    LOG_OUT(state){
+    LOG_OUT(state) {
       state.token = null;
+      state.userData = [];
     },
   },
   actions: {
-    getMovies(context){
+    getMovies(context) {
       axios({
-        method: 'get',
+        method: "get",
         url: `${API_URL}/movies/`,
       })
-      .then(res => {
-        context.commit('GET_MOVIES', res.data)
-      })
-      .catch(err => console.log(err))
+        .then((res) => {
+          context.commit("GET_MOVIES", res.data);
+        })
+        .catch((err) => console.log(err));
     },
-    signUp(context, payload){
-      const username = payload.username
-      const password1 = payload.password1
-      const password2 = payload.password2
-      const email = payload.email
+    signUp(context, payload) {
+      const username = payload.username;
+      const password1 = payload.password1;
+      const password2 = payload.password2;
+      const email = payload.email;
 
       axios({
-        method: 'post',
+        method: "post",
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1, password2, email
-        }
+          username,
+          password1,
+          password2,
+          email,
+        },
       })
-      .then(res => {
-        context.commit('SAVE_TOKEN', res.data.key)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then((res) => {
+          context.commit("SAVE_TOKEN", res.data.key);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    logIn(context, payload){
-      const username = payload.username
-      const password = payload.password
+    logIn(context, payload) {
+      const username = payload.username;
+      const password = payload.password;
 
       axios({
-        method: 'post',
+        method: "post",
         url: `${API_URL}/accounts/login/`,
         data: {
-          username, password
-        }
+          username,
+          password,
+        },
       })
-      .then(res => {
-        context.commit('SAVE_TOKEN', res.data.key)
-        context.commit('USER_DATA', res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then((res) => {
+          context.commit("SAVE_TOKEN", res.data.key);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    logOut(context){
-      context.commit('LOG_OUT')
-    }
+    logOut(context) {
+      context.commit("LOG_OUT");
+    },
+    getUserData(context) {
+      axios({
+        method: "get",
+        url: `${API_URL}/username/`,
+        headers: {
+          Authorization: `Token ${this.state.token}`,
+        },
+      })
+        .then((res) => {
+          context.commit("USER_DATA", res.data);
+        })
+        .catch((err) => console.log(err));
+    },
   },
   getters: {
-    isLogin(state){
-      return state.token ? true : false
-    }
-  }
+    isLogin(state) {
+      return state.token ? true : false;
+    },
+  },
 });
