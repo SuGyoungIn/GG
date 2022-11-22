@@ -64,9 +64,3 @@ def comments(request,movie_pk):
             serializer.save(movie=movie,user=request.user)
             return Response(serializer.data)
 
-
-
-
-
-
-    
