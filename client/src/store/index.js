@@ -15,6 +15,7 @@ export default new Vuex.Store({
     token: null,
     movies:[],
     articles:[],
+    userdata:[],
   },
   mutations: {
     GET_MOVIES(state, movies){
@@ -23,11 +24,14 @@ export default new Vuex.Store({
     SAVE_TOKEN(state, token){
       state.token = token;
       router.push({name: 'home'})
-      console.log('로그인됐슈')
+      console.log('로그인됐삼')
+    },
+    USER_DATA(state, userdata){
+      state.userdata = userdata;
     },
     LOG_OUT(state){
       state.token = null;
-    }
+    },
   },
   actions: {
     getMovies(context){
@@ -73,6 +77,7 @@ export default new Vuex.Store({
       })
       .then(res => {
         context.commit('SAVE_TOKEN', res.data.key)
+        context.commit('USER_DATA', res.data)
       })
       .catch(err => {
         console.log(err)

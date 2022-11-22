@@ -17,10 +17,9 @@
         <div class="d-flex align-items-center">
           <!-- Icon -->
           <router-link class="mx-2" to="/community">커뮤니티</router-link>
-          <router-link class="mx-2" to="/login">로그인</router-link>
-          <router-link class="mx-2" to="/signup">회원가입</router-link>
-          <b-avatar> </b-avatar>
-          <b-nav-item-dropdown text="SuSu">
+          <router-link class="mx-2" to="/login" v-if="!isLogin">로그인</router-link>
+          <router-link class="mx-2" to="/signup" v-if="!isLogin">회원가입</router-link>
+          <b-nav-item-dropdown :text="username" v-if="isLogin">
             <b-dropdown-item @click="movePage(myPage)">마이프로필</b-dropdown-item>
             <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -139,6 +138,11 @@
 
 <script>
 export default {
+  computed:{
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
+  },
   data() {
     return {
       genres: [
@@ -146,6 +150,7 @@ export default {
       selectedGenres: [],
       user_id: null,
       myPage:"myPage",
+      username:""
     };
   },
   methods: {

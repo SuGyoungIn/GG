@@ -22,6 +22,10 @@
         {{ movieDetailData?.vote_average }} /
         {{ movieDetailData?.vote_count }}명
       </p>
+      <div class="d-flex">
+        <!-- <img :src="imgBaseUrl + credit." alt="profile" v-for="credit, key in movieCredits" :key="key"> -->
+        <p v-for="credit, key in movieCredits" :key="key">{{ credit.name }}</p>
+      </div>
     </div>
 
     <div>
@@ -43,11 +47,13 @@ import axios from "axios";
 export default {
   created() {
     this.getDetailMovieData(this.movieId);
+    this.getMovieCredits(this.movieId);
   },
   data() {
     return {
       movieId: this.$route.params.movie_id,
       movieDetailData: {},
+      movieCredits: [],
       imgBaseUrl: "",
       userName:"testName",
       value:0,
@@ -71,6 +77,23 @@ export default {
         console.log(error);
       }
     },
+    async getMovieCredits(id){
+      const API_KEY = process.env.VUE_APP_API_KEY;
+      const API_URL = process.env.VUE_APP_API_URL + id.toString() + "/credits";
+
+      try {
+        const response = await axios.get(API_URL, {
+          params: {
+            api_key: API_KEY,
+            language: "ko-KR",
+          }
+        })
+        this.movieCredits = response.data.cast
+        console.log(this.movieCredits)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   },
   computed: {},
 };

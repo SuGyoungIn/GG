@@ -50,7 +50,7 @@ MSE1 = get_mse(ratings_pred,ratings_matrix.values)
 def predict_rating_topsim(ratings_arr,item_sim_arr,N=20):
     pred = np.zeros(ratings_arr.shape)
 
-    for col in range(ratings.arr.)
+    # for col in range(ratings.arr.)
 
 
 # print(item_sim_df["Godfather, The (1972)"].sort_values(ascending=False)[1:6])
