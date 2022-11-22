@@ -9,41 +9,41 @@
                 <div class="mb-md-5 mt-md-4 pb-5">
                   <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                   <p class="text-white-50 mb-5">
-                     로그인을 위한 아이디와 비밀번호를 입력해주세요.
+                    로그인을 위한 아이디와 비밀번호를 입력해주세요.
                   </p>
+                  <form @submit.prevent="logIn">
+                    <div class="form-outline form-white mb-4">
+                      <input
+                        type="text"
+                        id="username"
+                        v-model="username"
+                        class="form-control form-control-lg"
+                        placeholder="아이디"
+                      />
+                    </div>
 
-                  <div class="form-outline form-white mb-4">
-                    <input
-                      type="text"
-                      id="typeTextX"
-                      class="form-control form-control-lg"
-                      placeholder="아이디"
-                    />
-                  </div>
+                    <div class="form-outline form-white mb-4">
+                      <input
+                        type="password"
+                        id="password"
+                        v-model="password"
+                        class="form-control form-control-lg"
+                        placeholder="비밀번호"
+                      />
+                    </div>
 
-                  <div class="form-outline form-white mb-4">
-                    <input
-                      type="password"
-                      id="typePasswordX"
-                      class="form-control form-control-lg"
-                      placeholder="비밀번호"
-                    />
-                  </div>
-
-
-
-                  <!-- <p class="small mb-5 pb-lg-2">
+                    <!-- <p class="small mb-5 pb-lg-2">
                     <a class="text-white-50" href="#!">Forgot password?</a>
                   </p> -->
 
-                  <button
-                    class="btn btn-outline-light btn-lg px-5"
-                    type="submit"
-                  >
-                    Login
-                  </button>
-
-                  <div
+                    <button
+                      class="btn btn-outline-light btn-lg px-5"
+                      type="submit"
+                    >
+                      로그인
+                    </button>
+                  </form>
+                  <!-- <div
                     class="d-flex justify-content-center text-center mt-4 pt-1"
                   >
                     <a href="#!" class="text-white"
@@ -55,7 +55,7 @@
                     <a href="#!" class="text-white"
                       ><i class="fab fa-google fa-lg"></i
                     ></a>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div>
@@ -73,7 +73,27 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    logIn() {
+      const username = this.username
+      const password = this.password
+
+
+      const payload = {
+        username, password
+      }
+      this.$store.dispatch('logIn',payload)
+    },
+  },
+
+};
 </script>
 <style scoped>
 .gradient-custom {

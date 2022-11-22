@@ -22,9 +22,7 @@
           <b-avatar> </b-avatar>
           <b-nav-item-dropdown text="SuSu">
             <b-dropdown-item @click="movePage(myPage)">마이프로필</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
+            <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
 
          
@@ -144,28 +142,9 @@ export default {
   data() {
     return {
       genres: [
-        "모험",
-        "판타지",
-        "애니메이션",
-        "드라마",
-        "공포",
-        "액션",
-        "코미디",
-        "역사",
-        "서부",
-        "스릴러",
-        "범죄",
-        "다큐멘터리",
-        "SF",
-        "미스터리",
-        "음악",
-        "로맨스",
-        "가족",
-        "전쟁",
-        "TV 영화",
       ],
       selectedGenres: [],
-      user_id: 2,
+      user_id: null,
       myPage:"myPage",
     };
   },
@@ -180,6 +159,9 @@ export default {
       if(destination==="myPage"){
         this.$router.push({name: "mypage", params: {user_id: userId}})
       }
+    },
+    logOut(){
+      this.$store.dispatch('logOut')
     }
   },
 };
