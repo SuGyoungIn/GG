@@ -3,7 +3,7 @@
     <div>
       <form @submit.prevent="postComment(movieId)">
         <b-input-group :prepend="userName" class="mt-3">
-          <b-form-input v-model="content"></b-form-input>
+          <b-form-input v-model="content" :placeholder="preHolder"></b-form-input>
           <b-input-group-append>
             <b-form-rating inline v-model="stars"></b-form-rating>
             <b-button class="sub-btn" type="submit">등록</b-button>
@@ -59,14 +59,17 @@ export default {
       content: "",
       comments: [],
       isLoading: true,
+      preHolder: ""
     };
   },
   methods: {
     getUserName() {
       if (this.isLogin) {
         this.userName = this.$store.state.userData.username;
+        this.preHolder = "댓글을 입력하세요"
       } else {
         this.userName = "익명의 어피치";
+        this.preHolder = "로그인 이후 이용이 가능합니다."
       }
     },
     getComments(id) {

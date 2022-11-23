@@ -7,7 +7,7 @@
 export default {
   data() {
     return {
-      posterUrl: "https://image.tmdb.org/t/p/w500/",
+      posterUrl: "https://image.tmdb.org/t/p/original/",
     };
   },
   created() {

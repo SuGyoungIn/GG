@@ -30,7 +30,7 @@ export default new Vuex.Store({
     LOG_OUT(state) {
       state.token = null;
       state.userData = [];
-      window.location.reload();
+      router.push({ name: "home" });
     },
   },
   actions: {

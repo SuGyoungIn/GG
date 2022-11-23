@@ -9,6 +9,7 @@
 <script>
 export default {
   created() {},
+  props:["movieId"],
   data() {
     return {
       isLike: false,

@@ -20,7 +20,7 @@
         </span>
         <h4 class="detail-text ml-3">{{ releaseDate }}</h4>
         <h5 class="detail-text ml-3">{{ movieDetailData?.runtime }}분</h5>
-        <LikeIcon class="like ml-3" />
+        <LikeIcon class="like ml-3" :movieId="movieId"/>
       </span>
 
       <p class="detail-text overview">
