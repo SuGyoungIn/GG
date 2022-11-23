@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <b-modal id="searchModal" title="검색" hide-footer size="xl">
       <b-container fluid>
         <b-row class="my-1">
@@ -15,6 +14,7 @@
           <b-col sm="2">
             <b-button>검색</b-button>
           </b-col>
+          <p>{{ rec_movies }}</p>
         </b-row>
       </b-container>
       <hr />
@@ -30,7 +30,7 @@
                     v-for="(genre, idx) in genres"
                     :key="idx"
                     @click="addGenre(genre)"
-                    >{{ genre }}</b-button
+                    >{{ genre.name }}</b-button
                   >
                 </div>
               </b-col>
@@ -104,20 +104,29 @@
 
 <script>
 export default {
-  created() {
-  },
-  props:['movies'],
-  data(){
-    return{
-      genres: [],
+  created() {},
+  props: ["movies", "genres"],
+  data() {
+    return {
       selectedGenres: [],
-      word:'',
-    }
+      word: "",
+      rec_movies: [],
+    };
   },
   methods: {
-    searchWord(){
+    searchWord() {
+      if (!this.word.replace(/ /g, "")) {
+        this.rec_movies = [];
+        return;
+      }
+      this.rec_movies = this.movies.filter(
+        (movie) =>
+          movie.title.replace(/ /g, "").includes(this.word.replace(/ /g, "")) ||
+          movie.original_title
+            .replace(/ /g, "")
+            .includes(this.word.replace(/ /g, ""))
+      );
     },
-  
-  }
-}
+  },
+};
 </script>

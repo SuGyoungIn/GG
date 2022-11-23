@@ -51,7 +51,7 @@
       
     </div> -->
     <router-view class="gradient-custom"/>
-      <SearchModal :movies="movies"/>
+      <SearchModal :movies="movies" :genres="genres"/>
   </div>
 </template>
 
@@ -78,6 +78,7 @@ export default {
       username: "",
       isLoading: false,
       movies:[],
+      genres:[],
     };
   },
   methods: {
@@ -122,6 +123,8 @@ export default {
       console.log('여기 클릭됨')
       this.$store.dispatch('getMovies')
       this.movies = this.$store.state.movies
+      this.$store.dispatch('getGenres')
+      this.genres = this.$store.state.genres
     },
   },
 };
