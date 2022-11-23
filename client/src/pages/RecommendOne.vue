@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend1">
+  <div class="recommend1 gradient-custom">
     <div class="container">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
@@ -13,24 +13,36 @@ export default {
   components: {
     PosterCard
   },
+  created(){
+    this.getMovies()
+  },
   computed:{
-     movies(){
-      return this.$store.state.movies
-    },
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
   },
   data(){
     return{
+      movies: [],
     }
   },
   methods: {
-    
+     getMovies(){
+      if(this.isLogin){
+        this.$store.dispatch('getMovies')
+        this.movies = this.$store.state.movies
+      } else {
+        alert("로그인이 필요한 서비스 입니다.")
+        this.$router.push({name: 'login'})
+      }
+    },
   },
   
 }
 </script>
 <style scoped>
 .recommend1 {
-  margin: 0 10%;
+  padding:0 10%;
 }
 .container{
   display: grid;

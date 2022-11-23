@@ -1,6 +1,6 @@
 <template>
   <div class="poster-card" @click="moveToDetail(movie.id)">
-    <img class="poster" :src="posterUrl + movie.poster_path" img-alt="Image">
+    <b-card :img-src="posterUrl + movie.poster_path" img-alt="Image" overlay></b-card>
   </div>
 </template>
 <script>
@@ -24,16 +24,5 @@ export default {
 <style scoped>
 .poster-card{
   cursor: pointer;
-}
-
-.poster{
-  margin: 1vh;
-  box-sizing: border-box;
-  width: 12vw;
-  height: 18vw;
-}
-
-.poster:hover {
-  border: 5px solid #FFADAD;
 }
 </style>
