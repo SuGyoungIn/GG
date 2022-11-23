@@ -20,6 +20,7 @@
         </span>
         <h4 class="detail-text ml-3">{{ releaseDate }}</h4>
         <h5 class="detail-text ml-3">{{ movieDetailData?.runtime }}분</h5>
+        <LikeIcon class="like ml-3" />
       </span>
 
       <p class="detail-text overview">
@@ -31,6 +32,11 @@
           >{{ genre.name }}
         </span>
       </span>
+
+      <div class="provider d-flex" >
+        <span class="detail-text">OTT 서비스 :</span>
+        <WatchProvider :movieId="movieId" />
+      </div>
       <p class="credit detail-text">등장인물</p>
       <div class="d-flex align-items-start profiles" v-if="profile5">
         <div
@@ -72,26 +78,29 @@
           >접기</b-button
         >
       </div>
-        <LikeIcon class="like"/>
-      
     </div>
-
-    <CommentList />
+    <div class="similar">
+      <h4 class="detail-text">비슷한 영화</h4>
+      <PosterCarousel :movieId="movieId" />
+    </div>
+    <CommentList :movieId="movieId"/>
   </div>
 </template>
 <script>
 import axios from "axios";
 import CommentList from "../components/CommentList.vue";
 import LikeIcon from "../components/LikeIcon.vue";
-
+import PosterCarousel from "../components/PosterCarousel.vue";
+import WatchProvider from "../components/WatchProvider.vue";
 export default {
   created() {
-    this.getDetailMovieData(this.movieId);
-    this.getMovieCredits(this.movieId);
+    this.getDetailMovieData(this.movieId), this.getMovieCredits(this.movieId);
   },
   components: {
     CommentList,
-    LikeIcon
+    LikeIcon,
+    PosterCarousel,
+    WatchProvider,
   },
   data() {
     return {
@@ -103,11 +112,8 @@ export default {
       imgBaseUrl: "",
       intCnt: 0,
       floatCnt: false,
-      getSimilarMovies: {},
-      getWatchProviders: {},
       profile5: true,
       profile10: false,
-     
     };
   },
   methods: {
@@ -151,24 +157,6 @@ export default {
       }
     },
 
-    // async getSimilarMovies(id) {
-    //   const API_KEY = process.env.VUE_APP_API_KEY;
-    //   const API_URL = process.env.VUE_APP_API_URL + id.toString() + "/similar";
-
-    //   try {
-    //     const response = await axios.get(API_URL, {
-    //       params: {
-    //         api_key: API_KEY,
-    //         language: "ko-KR",
-    //       },
-    //     });
-    //     this.movieCredits = response.data.cast;
-    //     console.log(this.movieCredits);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
-    // async getWatchProviders(id) {},
     profileMore(val) {
       if (val) {
         this.profile5 = false;
@@ -178,7 +166,6 @@ export default {
         this.profile10 = false;
       }
     },
-    
   },
   computed: {},
 };
@@ -240,7 +227,11 @@ export default {
   top: 47%;
   left: 10%;
 }
-
+.provider {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+}
 .credit {
   position: absolute;
   top: 55%;
@@ -268,11 +259,7 @@ export default {
   word-wrap: break-all;
 }
 
-.like{
-  position: absolute;
-  top: 88%;
-  left: 10%;
-  cursor: pointer;
+.similar {
+  margin: 3vh 10%;
 }
-
 </style>

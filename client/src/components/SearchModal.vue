@@ -102,11 +102,14 @@
 
 <script>
 export default {
+  created() {},
+  props:[],
   data(){
     return{
       genres: [],
       selectedGenres: [],
     }
-  }
+  },
+  methods: {}
 }
 </script>

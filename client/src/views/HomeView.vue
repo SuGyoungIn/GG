@@ -1,7 +1,7 @@
 <template>
   <div class="home">
        
-    <section class="vh-100 gradient-custom">
+    <section class="vh-100">
    
       <h1>{{ userName }}님께 맞는 영화조각을 찾아보세요!</h1>
 
@@ -67,22 +67,6 @@ export default {
   position: relative;
 }
 
-.gradient-custom {
-  padding: 10px 10%;
-  overflow: hidden;
-  background: #6a11cb;
-  background: -webkit-linear-gradient(
-    to right,
-    rgba(106, 17, 203, 1),
-    rgba(37, 117, 252, 1)
-  );
-  background: linear-gradient(
-    to right,
-    rgba(106, 17, 203, 1),
-    rgba(37, 117, 252, 1)
-  );
-}
-
 h1 {
   color: #fff;
   font-weight: 800;
@@ -130,11 +114,12 @@ h1 {
 .recommend-name {
   position: absolute;
   top: 60%;
-  left: 45%;
+  left: 35%;
   text-align: center;
   color: #fff;
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 500;
+  text-shadow: 3px 3px 7px #fff;
 }
 
 @keyframes movePuzzle {

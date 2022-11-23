@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend1">
+  <div class="recommend1 gradient-custom">
     <div class="container">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
@@ -42,7 +42,7 @@ export default {
 </script>
 <style scoped>
 .recommend1 {
-  margin: 0 10%;
+  padding:0 10%;
 }
 .container{
   display: grid;
