@@ -40,13 +40,16 @@ def search_movie(request):
 def movie_likes(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     if request.method=='GET':
-        pass
+        serializer=MovieSerializer(movie)
+        return Response(serializer.data)
     elif request.method=='POST':
         if movie.like_users.filter(pk=request.user.pk).exists():
             movie.like_users.remove(request.user.pk)
         else:
+            print("add됨")
             movie.like_users.add(request.user.pk)
-        return Response(status=status.HTTP_200_OK)
+        serializer=MovieSerializer(movie)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 @api_view(['GET','POST'])
