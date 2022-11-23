@@ -14,10 +14,14 @@ export default new Vuex.Store({
     movies: [],
     articles: [],
     userData: [],
+    genres:[],
   },
   mutations: {
     GET_MOVIES(state, movies) {
       state.movies = movies;
+    },
+    GET_GENRES(state, genres) {
+      state.genres = genres;
     },
     SAVE_TOKEN(state, token) {
       state.token = token;
@@ -35,12 +39,28 @@ export default new Vuex.Store({
   },
   actions: {
     getMovies(context) {
+
+      console.log('무비 불러와유')
+
       axios({
         method: "get",
         url: `${API_URL}/movies/`,
       })
         .then((res) => {
           context.commit("GET_MOVIES", res.data);
+        })
+        .catch((err) => console.log(err));
+    },
+    getGenres(context) {
+
+      console.log('장르 불러와유')
+
+      axios({
+        method: "get",
+        url: `${API_URL}/movies/genres/`,
+      })
+        .then((res) => {
+          context.commit("GET_GENRES", res.data);
         })
         .catch((err) => console.log(err));
     },

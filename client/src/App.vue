@@ -38,7 +38,8 @@
           </b-nav-item-dropdown>
 
           <span class="mx-2" v-b-modal.searchModal>
-            <img src="/img/search.png" alt="검색" />
+            <img src="/img/search.png" alt="검색" @click="getMovies"/>
+
           </span>
           <!-- Avatar -->
         </div>
@@ -50,8 +51,8 @@
     <!-- <div class="container" v-if="!isLoading">
       
     </div> -->
-    <router-view class="gradient-custom" />
-    <SearchModal />
+    <router-view class="gradient-custom"/>
+      <SearchModal :movies="movies" :genres="genres"/>
   </div>
 </template>
 
@@ -78,6 +79,8 @@ export default {
       myPage: "myPage",
       username: "",
       isLoading: false,
+      movies:[],
+      genres:[],
     };
   },
   methods: {
@@ -111,12 +114,12 @@ export default {
           console.log(err);
         });
     },
-    movePage(destination) {
-    const userId = this.userId;
-    if (destination === "myPage") {
-      this.$router.push({ name: "mypage", params: { user_id: userId } });
-    }
-  },
+    getMovies(){
+      this.$store.dispatch('getMovies')
+      this.movies = this.$store.state.movies
+      this.$store.dispatch('getGenres')
+      this.genres = this.$store.state.genres
+    },
   },
 };
 </script>

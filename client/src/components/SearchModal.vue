@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <b-modal id="searchModal" title="검색" hide-footer size="xl">
       <b-container fluid>
         <b-row class="my-1">
@@ -15,6 +14,7 @@
           <b-col sm="2">
             <b-button>검색</b-button>
           </b-col>
+          <p>{{ rec_movies }}</p>
         </b-row>
       </b-container>
       <hr />
@@ -29,8 +29,8 @@
                   <b-button
                     v-for="(genre, idx) in genres"
                     :key="idx"
-                    @click="addGenre(genre)"
-                    >{{ genre }}</b-button
+                    @click="addGenre(genre.name)"
+                    >{{ genre.name }}</b-button
                   >
                 </div>
               </b-col>
@@ -46,54 +46,19 @@
           <span>검색결과</span>
 
           <span v-if="selectedGenres.length > 0"
-            ><b-button v-for="(selected, idx) in selectedGenres" :key="idx">{{
+            ><b-button v-for="(selected, idx) in selectedGenres" :key="idx" @click="deleteGenre(selected)">{{
               selected
             }}</b-button></span
           >
         </div>
         <b-container>
           <b-row>
-            <b-col
+            <b-col v-for="movie in rec_movies" :key="movie.id"
               ><b-card
                 img-src="https://picsum.photos/400/400/?image=41"
                 img-alt="Image"
                 overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
-            ></b-col>
-            <b-col
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
-                img-alt="Image"
-                overlay
-              ></b-card
+              > {{movie.title}}</b-card
             ></b-col>
           </b-row>
         </b-container>
@@ -104,26 +69,56 @@
 
 <script>
 export default {
-  created() {
-    this.getMovies()
-  },
-  props:[],
-  data(){
-    return{
-      genres: [],
+  created() {},
+  props: ["movies", "genres"],
+  data() {
+    return {
       selectedGenres: [],
-      word:'',
-      movies:[],
-    }
+      word: "",
+      rec_movies: [],
+    };
   },
   methods: {
-    searchWord(){
-      
+    searchWord() {
+      if (!this.word.replace(/ /g, "")) {
+        this.rec_movies = [];
+        return;
+      }
+      this.rec_movies = this.movies.filter(
+        (movie) =>
+          movie.title.replace(/ /g, "").includes(this.word.replace(/ /g, "")) ||
+          movie.original_title
+            .replace(/ /g, "")
+            .includes(this.word.replace(/ /g, ""))
+      );
+
+      if (this.selectedGenres.length>0){
+        var flag=0
+        for (var i=this.rec_movies.length-1;i>=0;--i){
+          for (var j=0;j<this.rec_movies[i].genre_ids.length;++j){
+            if (this.selectedGenres.includes(this.rec_movies[i].genre_ids[j].name)){
+              flag=1
+              break
+            }
+          }
+          if (!flag) this.rec_movies.splice(i,1)
+        }
+      }
+
     },
-    getMovies(){
-      this.$store.dispatch('getMovies')
-      this.movies = this.$store.state.movies
+    addGenre(genre_name){
+      if (this.selectedGenres.includes(genre_name)) return
+      this.selectedGenres.push(genre_name)
+      this.searchWord()
     },
-  }
-}
+    deleteGenre(genre_name){
+      for (var i=0;i<this.selectedGenres.length;++i){
+        if (this.selectedGenres[i]==genre_name){
+          this.selectedGenres.splice(i,1)
+        }
+      }
+      this.searchWord()
+    }
+  },
+};
 </script>
