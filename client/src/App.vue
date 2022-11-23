@@ -31,7 +31,7 @@
             >회원가입</router-link
           >
           <b-nav-item-dropdown :text="username" v-if="isLogin">
-            <b-dropdown-item @click="movePage(myPage)"
+            <b-dropdown-item @click="moveToMyPage"
               >마이페이지</b-dropdown-item
             >
             <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
@@ -120,6 +120,9 @@ export default {
       this.$store.dispatch('getGenres')
       this.genres = this.$store.state.genres
     },
+    moveToMyPage(){
+      this.$router.push({name:'mypage', params: {user_id: this.userId}})
+    }
   },
 };
 </script>
