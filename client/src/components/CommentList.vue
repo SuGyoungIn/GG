@@ -5,7 +5,7 @@
         <b-input-group :prepend="userName" class="mt-3">
           <b-form-input></b-form-input>
           <b-input-group-append>
-            <b-form-rating inline v-model="rating"></b-form-rating>
+            <b-form-rating inline v-model="stars"></b-form-rating>
             <b-button class="sub-btn">등록</b-button>
           </b-input-group-append>
         </b-input-group>
@@ -36,22 +36,24 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   created() {
     this.getUserName();
-    this.getComments(this.movieId)
+    this.getComments(this.movieId);
   },
   computed: {
     isLogin() {
       return this.$store.getters.isLogin;
     },
   },
-  props: [],
+  props: ["movieId"],
   data() {
     return {
       userName: "",
-      rating: 0,
-      comments:[],
+      stars: 0,
+      comments: [],
       isLoading: true,
     };
   },
@@ -63,10 +65,26 @@ export default {
         this.userName = "익명의 어피치";
       }
     },
-    // getComments(){
-    //   const API_URL = "http://127.0.0.1:8000";
-    //   this.isLoading = true;
-    // }
+    getComments(id) {
+      const API_URL = "http://127.0.0.1:8000";
+      this.isLoading = true;
+      axios({
+        method: "get",
+        url: `${API_URL}/movies/${id}/comments/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`,
+        },
+      })
+      .then(res=>{
+        this.comments = res.data
+        console.log(this.comments)
+        this.isLoading = false;
+      })
+      .catch(err=>{
+        this.isLoading = false;
+        console.log(err)
+      })
+    },
   },
 };
 </script>
@@ -75,7 +93,7 @@ export default {
 #commentlist {
   margin: 3vh 10%;
 }
-.sub-btn{
-  background-color: #FFADAD;
+.sub-btn {
+  background-color: #ffadad;
 }
 </style>
