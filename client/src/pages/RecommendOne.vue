@@ -17,9 +17,6 @@ export default {
     this.getMovies()
   },
   computed:{
-    isLogin(){
-      return this.$store.getters.isLogin
-    }
   },
   data(){
     return{
@@ -28,13 +25,8 @@ export default {
   },
   methods: {
      getMovies(){
-      if(this.isLogin){
-        this.$store.dispatch('getMovies')
-        this.movies = this.$store.state.movies
-      } else {
-        alert("로그인이 필요한 서비스 입니다.")
-        this.$router.push({name: 'login'})
-      }
+      this.$store.dispatch('getMovies')
+      this.movies = this.$store.state.movies
     },
   },
   

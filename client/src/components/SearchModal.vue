@@ -104,20 +104,26 @@
 
 <script>
 export default {
-  created() {},
+  created() {
+    this.getMovies()
+  },
   props:[],
   data(){
     return{
       genres: [],
       selectedGenres: [],
       word:'',
-      
+      movies:[],
     }
   },
   methods: {
     searchWord(){
       
-    }
+    },
+    getMovies(){
+      this.$store.dispatch('getMovies')
+      this.movies = this.$store.state.movies
+    },
   }
 }
 </script>

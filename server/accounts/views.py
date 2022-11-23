@@ -11,11 +11,9 @@ from .serializers import UserSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def username(request):
-    sub={
-        'username':request.user.username,
-        'user_pk':request.user.pk
-    }
-    return Response(sub)
+    user= get_object_or_404(get_user_model(),pk=request.user.pk)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
