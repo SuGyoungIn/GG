@@ -59,10 +59,41 @@ def comments(request,movie_pk):
 
     elif request.method == 'POST':
         movie = get_object_or_404(Movie,pk=movie_pk)
-        serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(movie=movie,user=request.user)
-            return Response(serializer.data)
+        try:
+            comments = Comment.objects.filter(movie=movie_pk)
+            for comment in comments:
+                if comment.user.username==request.user.username:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+            serializer = CommentSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(movie=movie,user=request.user)
+                return Response(serializer.data)
+        except:
+            serializer = CommentSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(movie=movie,user=request.user)
+                return Response(serializer.data)
+
+
+@api_view(['PUT','DELETE'])
+@permission_classes([IsAuthenticated])
+def comment(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == 'PUT':
+        if request.user == comment.user:
+            serializer = CommentSerializer(comment, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    elif request.method == 'DELETE':
+        if request.user == comment.user:
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 @api_view(['GET'])
@@ -106,5 +137,74 @@ def get_sim_user(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_sim_items(request,):
-    pass
+def get_sim_items(request):
+    this_user=request.user.username
+    users = get_list_or_404(get_user_model())
+    movies = get_list_or_404(Movie)
+    comments = get_list_or_404(Comment)
+    columns = dict()
+    row = dict()
+    sim=dict()
+    simsim=dict()
+    for user in users:
+        columns[user.username]=0
+    for movie in movies:
+        row[movie.id]=columns.copy()
+        sim[movie.id]=0
+    for movie in movies:
+        simsim[movie.id]=sim.copy()
+
+    for comment in comments:
+        row[comment.movie.id][comment.user.username]+=comment.stars
+
+    pprint(row)
+    user_comments = get_list_or_404(Comment,user=request.user.pk)
+
+    movie_list=[]
+    for comment in user_comments:
+        movie_list.append(comment.movie.id)
+
+    for movie1 in movies:
+        for movie2 in movies:
+            if movie1.id ==movie2.id:
+                simsim[movie1.id][movie2.id]=1
+                continue
+            if row[movie1.id]==columns or row[movie2.id]==columns:continue
+            a=0
+            b=0
+            c=0
+            for i in columns.keys():
+                a+=row[movie1.id][i]*row[movie2.id][i]
+                b+=row[movie1.id][i]**2
+                c+=row[movie2.id][i]**2
+            simsim[movie1.id][movie2.id]=a/((b**0.5)*(c**0.5))
+    
+    pprint(simsim)
+    rec_movie_list=[]
+    for movie1 in movie_list:
+        s=row[movie1][request.user.username]
+        for movie2 in movies:
+            if movie2.id in movie_list:
+                continue
+            sim[movie2.id]+=s*simsim[movie1][movie2.id]
+
+    pprint(sim)
+
+    for key,value in sim.items():
+        if value:
+            this_movie=get_object_or_404(Movie,pk=key)
+            rec_movie_list.append({
+                'movie_id':key,
+                'poster_path':this_movie.poster_path,
+                'title':this_movie.title,
+                'sim':value
+            })
+    rec_movie_list.sort(reverse=True,key=lambda x:x['sim'])
+    return Response(rec_movie_list)
+
+
+
+    
+    
+    
+    
