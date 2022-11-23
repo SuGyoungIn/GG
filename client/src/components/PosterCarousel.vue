@@ -1,7 +1,7 @@
 <template>
   <div id="poster-carousel">
     <b-container>
-      <img class="similar" @click="moveToDetail(movie.id)" :src="imgBaseUrl + movie.poster_path" alt="similarMovie" v-for="movie, key in similarMovies" :key="key">
+      <img class="similar" :src="imgBaseUrl + movie.poster_path" alt="similarMovie" v-for="movie, key in similarMovies" :key="key">
     </b-container>
   </div>
 </template>
@@ -32,15 +32,11 @@ export default {
           },
         });
         this.similarMovies = response.data.results.slice(0,6);
-        console.log(this.similarMovies);
+
       } catch (error) {
         console.log(error);
       }
     },
-    moveToDetail(movieId){
-      this.$router.push({name:'detail', params: {movie_id: movieId}})
-      window.location.reload();
-    }
   }
 }
 </script>
@@ -51,7 +47,6 @@ export default {
 }
 .similar {
   width: 10vw;
-  cursor: pointer;
   margin-right: 1vw;
 }
 </style>
