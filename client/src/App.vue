@@ -39,6 +39,7 @@
 
           <span class="mx-2" v-b-modal.searchModal>
             <img src="/img/search.png" alt="검색" />
+            
           </span>
           <!-- Avatar -->
         </div>

@@ -8,6 +8,8 @@
             <b-form-input
               id="input-default"
               placeholder="원하는 영화를 검색해보세요"
+              v-model="word"
+              @input="searchWord"
             ></b-form-input>
           </b-col>
           <b-col sm="2">
@@ -108,8 +110,14 @@ export default {
     return{
       genres: [],
       selectedGenres: [],
+      word:'',
+      
     }
   },
-  methods: {}
+  methods: {
+    searchWord(){
+      
+    }
+  }
 }
 </script>
