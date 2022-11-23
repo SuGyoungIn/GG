@@ -105,25 +105,19 @@
 <script>
 export default {
   created() {
-    this.getMovies()
   },
-  props:[],
+  props:['movies'],
   data(){
     return{
       genres: [],
       selectedGenres: [],
       word:'',
-      movies:[],
     }
   },
   methods: {
     searchWord(){
-      
     },
-    getMovies(){
-      this.$store.dispatch('getMovies')
-      this.movies = this.$store.state.movies
-    },
+  
   }
 }
 </script>

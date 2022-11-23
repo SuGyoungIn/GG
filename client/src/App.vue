@@ -38,8 +38,8 @@
           </b-nav-item-dropdown>
 
           <span class="mx-2" v-b-modal.searchModal>
-            <img src="/img/search.png" alt="검색" />
-            
+            <img src="/img/search.png" alt="검색" @click="getMovies"/>
+
           </span>
           <!-- Avatar -->
         </div>
@@ -51,7 +51,7 @@
       
     </div> -->
     <router-view class="gradient-custom"/>
-      <SearchModal />
+      <SearchModal :movies="movies"/>
   </div>
 </template>
 
@@ -77,6 +77,7 @@ export default {
       myPage: "myPage",
       username: "",
       isLoading: false,
+      movies:[],
     };
   },
   methods: {
@@ -116,6 +117,11 @@ export default {
           this.isLoading = false;
           console.log(err);
         });
+    },
+    getMovies(){
+      console.log('여기 클릭됨')
+      this.$store.dispatch('getMovies')
+      this.movies = this.$store.state.movies
     },
   },
 };
