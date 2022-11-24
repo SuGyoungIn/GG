@@ -1,8 +1,6 @@
 <template>
-  
   <div class="recommend1 gradient-custom">
-    
-    <div><b-button @click="suffle">랜덤 선택</b-button></div>
+    <b-button @click="suffle">랜덤으로 추천받기</b-button>
     <div class="contain">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
@@ -41,7 +39,7 @@ export default {
 </script>
 <style scoped>
 .recommend1{
-  padding: 0 10%
+  padding: 2rem 10%;
 }
 
 .contain{

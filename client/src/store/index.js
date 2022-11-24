@@ -39,9 +39,6 @@ export default new Vuex.Store({
   },
   actions: {
     getMovies(context) {
-
-      console.log('무비 불러와유')
-
       axios({
         method: "get",
         url: `${API_URL}/movies/`,

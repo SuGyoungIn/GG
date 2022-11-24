@@ -20,7 +20,7 @@
         </span>
         <h4 class="detail-text ml-3">{{ releaseDate }}</h4>
         <h5 class="detail-text ml-3">{{ movieDetailData?.runtime }}분</h5>
-        <LikeIcon class="like ml-3" :movieId="movieId"/>
+        <LikeIcon class="like ml-3" :movieId="movieId" />
       </span>
 
       <p class="detail-text overview">
@@ -33,7 +33,7 @@
         </span>
       </span>
 
-      <div class="provider d-flex" >
+      <div class="provider d-flex">
         <span class="detail-text mr-3">OTT 서비스 :</span>
         <WatchProvider :movieId="movieId" />
       </div>
@@ -82,9 +82,9 @@
     <div class="similar">
       <h4 class="detail-text">비슷한 영화</h4>
       <PosterCarousel :movieId="movieId" />
-      <CustomCarousel :movieId="movieId" />
+
     </div>
-    <CommentList :movieId="movieId"/>
+    <CommentList :movieId="movieId" />
   </div>
 </template>
 <script>
@@ -93,7 +93,8 @@ import CommentList from "../components/CommentList.vue";
 import LikeIcon from "../components/LikeIcon.vue";
 import PosterCarousel from "../components/PosterCarousel.vue";
 import WatchProvider from "../components/WatchProvider.vue";
-import CustomCarousel from "../components/CustomCarousel.vue";
+
+
 export default {
   created() {
     this.getDetailMovieData(this.movieId), this.getMovieCredits(this.movieId);
@@ -103,7 +104,7 @@ export default {
     LikeIcon,
     PosterCarousel,
     WatchProvider,
-    CustomCarousel
+
   },
   data() {
     return {
@@ -174,7 +175,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .hero-container {
   width: 100%;
   margin: 0;
@@ -248,7 +248,7 @@ export default {
 }
 
 .profile-btn {
-  height: 4vh;
+  height: 3.5vw;
 }
 
 .profile-name {

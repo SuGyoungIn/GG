@@ -175,4 +175,7 @@ a {
     rgba(37, 117, 252, 1)
   );
 }
+button {
+  background-color: #ffadad !important;
+}
 </style>

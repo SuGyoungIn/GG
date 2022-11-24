@@ -10,18 +10,19 @@
             data-interval="0"
           >
             <ol class="carousel-indicators">
+              
               <li
                 data-target="#myCarousel"
                 data-slide-to="0"
-                class="active"
+                :class="page0"
               ></li>
-              <li data-target="#myCarousel" data-slide-to="1"></li>
-              <li data-target="#myCarousel" data-slide-to="2"></li>
+              <li data-target="#myCarousel" data-slide-to="1" :class="page1"></li>
+              <li data-target="#myCarousel" data-slide-to="2" :class="page2"></li>
             </ol>
 
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <b-row v-for="key in 3" :key="key">
+              <div class="carousel-item active" v-for="key in 3" :key="key">
+                <b-row >
                   <b-col cols="3" v-for="key in 4" :key="key">
                     <div class="thumb-wrapper">
                       <div class="img-box">
@@ -60,7 +61,11 @@ export default {
   created() {},
   props: ["movieId"],
   data() {
-    return {};
+    return {
+      page0:"active",
+      page1:"",
+      page2:"",
+    };
   },
   methods: {},
 };
