@@ -1,8 +1,8 @@
 <template>
   <div id="community-view">
     <h1>커뮤니티</h1>
-    <div class="community-banner">
-      <b-button @click="moveToFindUser">유저 찾으러 가기 ></b-button>
+    <div class="community-banner d-flex justify-content-center align-items-center">
+      <b-button class="find-btn" @click="moveToFindUser">유저 찾으러 가기 ></b-button>
     </div>
     <ArticleList />
   </div>
@@ -29,8 +29,9 @@ export default {
       }
     },
     moveToFindUser(){
-      this.$router.push({ name: ""})
-    }
+      this.$router.push({ name: "finduser"})
+    },
+    
   },
 };
 </script>
@@ -43,6 +44,18 @@ export default {
 .community-banner {
   width: 100%;
   height: 30vh;
-  background-color: #e1e1e1;
+  background-image: url('/public/img/bannerImg.jpeg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+.find-btn{
+height: 3.5vw;
+}
+
+.find-btn::after {
+  content: "";
+  
+}
+
 </style>
