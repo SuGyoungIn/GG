@@ -46,17 +46,18 @@
             }}</b-button></span
           >
         </div>
-        <b-container>
-          <b-row>
-            <b-col v-for="movie in rec_movies" :key="movie.id"
-              ><b-card
-                img-src="https://picsum.photos/400/400/?image=41"
+        <div class="contain">
+
+
+              <b-card
+              v-for="movie in rec_movies" :key="movie.id"
+                :img-src= "baseUrl + movie.poster_path"
                 img-alt="Image"
                 overlay
-              > {{movie.title}}</b-card
-            ></b-col>
-          </b-row>
-        </b-container>
+              ></b-card
+            >
+
+        </div>
       </div>
     </b-modal>
   </div>
@@ -71,6 +72,8 @@ export default {
       selectedGenres: [],
       word: "",
       rec_movies: [],
+      imgPoster: "",
+      baseUrl: 'https://image.tmdb.org/t/p/original'
     };
   },
   methods: {
@@ -117,3 +120,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.contain {
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+}
+
+</style>
