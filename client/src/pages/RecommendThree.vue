@@ -74,28 +74,11 @@ export default {
   },
   methods: {
     async getMovies() {
-      this.$store.dispatch("getGenres");
-      this.genres = this.$store.state.genres;
-      console.log(this.genres);
 
       if (this.isLogin) {
         const API_URL = "http://127.0.0.1:8000";
         this.isLoading = true;
-        axios({
-          method: "get",
-          url: `${API_URL}/movies/get_sim_items/`,
-          headers: {
-            Authorization: `Token ${this.$store.state.token}`,
-          },
-        })
-          .then((res) => {
-            this.rec_movies = res.data;
-          })
-          .catch((err) => {
-            this.isLoading = false;
-            console.log(err);
-          });
-
+        
         axios({
           method: "get",
           url: `${API_URL}/username/`,
@@ -119,6 +102,22 @@ export default {
                 this.genredata2[idx]=this.genredata2_sub2[idx]/this.genredata2_sub1[idx]
               }
             }
+            console.log(this.genredata1,this.genredata2)
+          })
+          .catch((err) => {
+            this.isLoading = false;
+            console.log(err);
+          });
+        
+        axios({
+          method: "get",
+          url: `${API_URL}/movies/get_sim_items/`,
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`,
+          },
+        })
+          .then((res) => {
+            this.rec_movies = res.data;
           })
           .catch((err) => {
             this.isLoading = false;
