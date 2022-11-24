@@ -49,13 +49,16 @@ export default {
     plugins: {
       type: Object,
       default: () => {}
+    },
+    genredata2:{
+      type:Array,
     }
   },
   data() {
     return {
       chartData: {
         labels: [ '모험','판타지','애니메이션','드라마','공포','액션','코미디','역사','서부','스릴러','범죄','다큐멘터리','SF','미스터리','음악','로맨스','가족','전쟁','TV 영화'],
-        datasets: [ { data: [1.5,7,5,4,2,3,4,8,6,1,2,1,5,4,9,8,7,2,0] } ]
+        datasets: [ { data: this.genredata2 } ]
       },
       chartOptions: {
         responsive: true

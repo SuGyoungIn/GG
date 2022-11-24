@@ -1,8 +1,8 @@
 <template>
-  <div id="CommunityView">
-    <h1>community</h1>
+  <div id="community-view">
+    <h1>커뮤니티</h1>
     <div class="community-banner">
-      <b-button>유저 찾으러 가기 ></b-button>
+      <b-button @click="moveToFindUser">유저 찾으러 가기 ></b-button>
     </div>
     <ArticleList />
   </div>
@@ -28,10 +28,18 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
+    moveToFindUser(){
+      this.$router.push({ name: ""})
+    }
   },
 };
 </script>
 <style scoped>
+
+#community-view {
+  padding: 2rem 10%;
+  color: #fff;
+}
 .community-banner {
   width: 100%;
   height: 30vh;

@@ -159,7 +159,6 @@ def get_sim_items(request):
     for comment in comments:
         row[comment.movie.id][comment.user.username]+=comment.stars
 
-    pprint(row)
     user_comments = get_list_or_404(Comment,user=request.user.pk)
 
     movie_list=[]
@@ -181,7 +180,6 @@ def get_sim_items(request):
                 c+=row[movie2.id][i]**2
             simsim[movie1.id][movie2.id]=a/((b**0.5)*(c**0.5))
     
-    pprint(simsim)
     rec_movie_list=[]
     for movie1 in movie_list:
         s=row[movie1][request.user.username]
@@ -189,8 +187,6 @@ def get_sim_items(request):
             if movie2.id in movie_list:
                 continue
             sim[movie2.id]+=s*simsim[movie1][movie2.id]
-
-    pprint(sim)
 
     for key,value in sim.items():
         if value:
@@ -200,7 +196,6 @@ def get_sim_items(request):
             rec_movie_list.append(serializer)
     rec_movie_list.sort(reverse=True,key=lambda x:x['sim'])
 
-    print(rec_movie_list)
     return Response(rec_movie_list)
 
 
