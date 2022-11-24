@@ -213,20 +213,22 @@ export default {
 
       for (let gen in this.sorted_movies) {
         this.sorted_movies[gen]["vote_average"].sort(
-          () => this.sorted_movies[gen].vote_average
+          (a,b) => b.vote_average-a.vote_average
         );
         this.sorted_movies[gen]["vote_count"].sort(
-          () => this.sorted_movies[gen].vote_count
+          (a,b) => b.vote_count-a.vote_count
         );
         this.sorted_movies[gen]["popular"].sort(
-          () => this.sorted_movies[gen].popular
+          (a,b) => b.popular-a.popular
         );
         this.sorted_movies[gen]["like_users"].sort(
-          () => this.sorted_movies[gen].like_users.length
+          (a,b) => b.like_users.length-a.like_users.length
         );
+        console.log(this.sorted_movies[gen]["release_date"])
         this.sorted_movies[gen]["release_date"].sort(
-          () => this.sorted_movies[gen].release_date
+          (a,b) => b.release_date-a.release_date
         );
+        console.log(this.sorted_movies[gen]["release_date"])
       }
     },
     changeGenre(genre) {
