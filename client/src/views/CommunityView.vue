@@ -5,7 +5,7 @@
     <div class="community-banner d-flex justify-content-center align-items-center">
       <b-button class="find-btn" @click="moveToFindUser">유저 찾으러 가기 ></b-button>
     </div>
-    <ArticleList />
+    <ArticleList class="mt-5"/>
   </div>
 </template>
 <script>
@@ -51,7 +51,7 @@ export default {
   background-size: cover;
 }
 .find-btn{
-height: 3.5vw;
+height: 4vw;
 }
 
 .find-btn::after {
