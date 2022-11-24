@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers.movies import MovieSerializer,SearchMovieSerializer
 from .serializers.genre import GenreSerializers
 from .serializers.comment import CommentSerializer
+from accounts.serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from .models import Movie, Genre, Comment
 from pprint import pprint
@@ -133,8 +134,12 @@ def get_sim_user(request):
     rec=[]
     for key,value in cos_sim.items():
         if value:
-            rec.append({'username':key,'cs':value})
+            usermodel=get_object_or_404(get_user_model(),username=key)
+            serializer = UserSerializer(usermodel).data
+            serializer['cs']=value
+            rec.append(serializer)
     rec.sort(reverse=True,key=lambda x:x['cs'])
+
     return Response(rec)
 
 @api_view(['GET'])
