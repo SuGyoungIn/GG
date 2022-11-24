@@ -10,6 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
     like_movies= MovieSerializer(read_only=True,many=True)
 
     class CommentSerializer(serializers.ModelSerializer):
+        class MovieMovieSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = Movie
+                fields = '__all__'
+        movie = MovieMovieSerializer(read_only=True)
         class Meta:
             model = Comment
             fields = '__all__'

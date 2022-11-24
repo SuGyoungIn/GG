@@ -1,8 +1,8 @@
 <template>
   <div id="poster-carousel">
-    <b-container>
+    <div>
       <img class="similar" :src="imgBaseUrl + movie.poster_path" alt="similarMovie" v-for="movie, key in similarMovies" :key="key">
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -31,7 +31,7 @@ export default {
             language: "ko-KR",
           },
         });
-        this.similarMovies = response.data.results.slice(0,6);
+        this.similarMovies = response.data.results.slice(0,7);
 
       } catch (error) {
         console.log(error);
@@ -41,12 +41,9 @@ export default {
 }
 </script>
 <style scoped>
-.container{
-  padding: 0;
-  margin:0;
-}
 .similar {
   width: 10vw;
+  height: 15vw;
   margin-right: 1vw;
 }
 </style>

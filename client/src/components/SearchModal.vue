@@ -14,19 +14,17 @@
           <b-col sm="2">
             <b-button>검색</b-button>
           </b-col>
-          <p>{{ rec_movies }}</p>
         </b-row>
       </b-container>
       <hr />
       <div>
-        <b-button v-b-toggle.collapse-1>상세설정</b-button>
+        <b-button v-b-toggle.collapse-1>필터</b-button>
         <b-collapse id="collapse-1" class="mt-2">
           <b-card>
             <b-row>
-              <b-col sm="9">
-                <p class="card-text">장르</p>
+              <b-col>
                 <div>
-                  <b-button
+                  <b-button class="mr-1 mb-1"
                     v-for="(genre, idx) in genres"
                     :key="idx"
                     @click="addGenre(genre.name)"
@@ -34,19 +32,16 @@
                   >
                 </div>
               </b-col>
-              <b-col sm="3">
-                <p class="card-text">별점</p>
-              </b-col>
             </b-row>
           </b-card>
         </b-collapse>
       </div>
       <div>
         <div>
-          <span>검색결과</span>
+          <span class="mr-2">검색결과</span>
 
           <span v-if="selectedGenres.length > 0"
-            ><b-button v-for="(selected, idx) in selectedGenres" :key="idx" @click="deleteGenre(selected)">{{
+            ><b-button class="mr-1" v-for="(selected, idx) in selectedGenres" :key="idx" @click="deleteGenre(selected)">{{
               selected
             }}</b-button></span
           >
@@ -93,9 +88,9 @@ export default {
       );
 
       if (this.selectedGenres.length>0){
-        var flag=0
-        for (var i=this.rec_movies.length-1;i>=0;--i){
-          for (var j=0;j<this.rec_movies[i].genre_ids.length;++j){
+        let flag=0
+        for (let i=this.rec_movies.length-1;i>=0;--i){
+          for (let j=0;j<this.rec_movies[i].genre_ids.length;++j){
             if (this.selectedGenres.includes(this.rec_movies[i].genre_ids[j].name)){
               flag=1
               break
@@ -112,7 +107,7 @@ export default {
       this.searchWord()
     },
     deleteGenre(genre_name){
-      for (var i=0;i<this.selectedGenres.length;++i){
+      for (let i=0;i<this.selectedGenres.length;++i){
         if (this.selectedGenres[i]==genre_name){
           this.selectedGenres.splice(i,1)
         }

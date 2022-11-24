@@ -121,6 +121,7 @@ export default {
       this.genres = this.$store.state.genres
     },
     moveToMyPage(){
+      this.getUserData()
       this.$router.push({name:'mypage', params: {user_id: this.userId}})
     }
   },
@@ -173,5 +174,8 @@ a {
     rgba(106, 17, 203, 1),
     rgba(37, 117, 252, 1)
   );
+}
+button {
+  background-color: #ffadad !important;
 }
 </style>
