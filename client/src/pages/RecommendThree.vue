@@ -10,12 +10,12 @@
 
     <h1>내가 좋아한 장르 지표</h1>
     <div class="chart-bg">
-      <BarChart :genredata1="genredata1" />
+      <BarChart v-if="!isLoading" :genredata1="genredata1" />
     </div>
 
     <h1>내가 평가하는 장르 지표</h1>
     <div class="chart-bg">
-      <BarChart2 :genredata2="genredata2" />
+      <BarChart2 v-if="!isLoading" :genredata2="genredata2" />
     </div>
   </div>
 </template>
@@ -33,7 +33,8 @@ export default {
     BarChart2,
   },
   created() {
-    this.getMovies();
+    this.getData();
+    this.getRecMovies();
   },
   computed: {
     isLogin() {
@@ -69,17 +70,17 @@ export default {
       genredata2: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       genredata2_sub1: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       genredata2_sub2: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-
+      isLoading: true,
     };
   },
   methods: {
-    async getMovies() {
+    async getData() {
 
       if (this.isLogin) {
         const API_URL = "http://127.0.0.1:8000";
         this.isLoading = true;
         
-        axios({
+        await axios({
           method: "get",
           url: `${API_URL}/username/`,
           headers: {
@@ -87,11 +88,6 @@ export default {
           },
         })
           .then((res) => {
-            for (let idx1 in res.data.like_movies) {
-              for (let idx2 in res.data.like_movies[idx1].genre_ids) {
-                this.genredata1[this.NtoG[res.data.like_movies[idx1].genre_ids[idx2]]]++;
-              }
-            }
             for (let idx1 in res.data.user_comments) {
               for (let idx2 in res.data.user_comments[idx1].movie.genre_ids) {
                 this.genredata2_sub1[this.NtoG[res.data.user_comments[idx1].movie.genre_ids[idx2]]]++;
@@ -102,14 +98,29 @@ export default {
                 this.genredata2[idx]=this.genredata2_sub2[idx]/this.genredata2_sub1[idx]
               }
             }
+            for (let idx1 in res.data.like_movies) {
+              for (let idx2 in res.data.like_movies[idx1].genre_ids) {
+                this.genredata1[this.NtoG[res.data.like_movies[idx1].genre_ids[idx2]]]++;
+              }
+            }
             console.log(this.genredata1,this.genredata2)
+            this.isLoading = false
           })
           .catch((err) => {
             this.isLoading = false;
             console.log(err);
           });
-        
-        axios({
+      } else {
+        alert("로그인이 필요한 서비스 입니다.");
+        this.$router.push({ name: "login" });
+      }
+    },
+    async getRecMovies() {
+
+      if (this.isLogin) {
+        const API_URL = "http://127.0.0.1:8000";
+        this.isLoading = true;
+        await axios({
           method: "get",
           url: `${API_URL}/movies/get_sim_items/`,
           headers: {
@@ -128,6 +139,8 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
+
+
   },
 };
 </script>
