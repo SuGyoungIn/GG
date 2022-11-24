@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    
     <div class="spinner" v-if="isLoading">
       <b-spinner
         variant="dark"
@@ -7,52 +8,49 @@
         label="Large Spinner"
       ></b-spinner>
     </div>
- <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
-      <!-- Container wrapper -->
-      <div class="container-fluid">
-        <!-- Collapsible wrapper -->
-        <div class="" id="navbarSupportedContent">
-          <!-- Navbar brand -->
-          <router-link to="/"
-            ><img src="/gglogo.png" alt="logo" style="width: 100px"
-          /></router-link>
-          <!-- Left links -->
-        </div>
 
-        <!-- Right elements -->
-        <div class="d-flex align-items-center">
-          <!-- Icon -->
-          <router-link class="mx-2" to="/community">커뮤니티</router-link>
-          <router-link class="mx-2" to="/login" v-if="!isLogin"
-            >로그인</router-link
-          >
-          <router-link class="mx-2" to="/signup" v-if="!isLogin"
-            >회원가입</router-link
-          >
-          <b-nav-item-dropdown :text="username" v-if="isLogin">
-            <b-dropdown-item @click="moveToMyPage"
-              >마이페이지</b-dropdown-item
+    <div v-if="!isLoading">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+          <!-- Collapsible wrapper -->
+          <div class="" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <router-link to="/"
+              ><img src="/gglogo.png" alt="logo" style="width: 100px"
+            /></router-link>
+            <!-- Left links -->
+          </div>
+
+          <!-- Right elements -->
+          <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <router-link class="mx-2" to="/community">커뮤니티</router-link>
+            <router-link class="mx-2" to="/login" v-if="!isLogin"
+              >로그인</router-link
             >
-            <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
-          </b-nav-item-dropdown>
+            <router-link class="mx-2" to="/signup" v-if="!isLogin"
+              >회원가입</router-link
+            >
+            <b-nav-item-dropdown :text="username" v-if="isLogin">
+              <b-dropdown-item @click="moveToMyPage"
+                >마이페이지</b-dropdown-item
+              >
+              <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
+            </b-nav-item-dropdown>
 
-          <span class="mx-2" v-b-modal.searchModal>
-            <img src="/img/search.png" alt="검색" @click="getMovies"/>
-
-          </span>
-          <!-- Avatar -->
+            <span class="mx-2" v-b-modal.searchModal>
+              <img src="/img/search.png" alt="검색" @click="getMovies" />
+            </span>
+            <!-- Avatar -->
+          </div>
+          <!-- Right elements -->
         </div>
-        <!-- Right elements -->
-      </div>
-      <!-- Container wrapper -->
-    </nav>
-  </div>
-    <!-- <div class="container" v-if="!isLoading">
-      
-    </div> -->
-    <router-view class="gradient-custom"/>
-      <SearchModal :movies="movies" :genres="genres"/>
+        <!-- Container wrapper -->
+      </nav>
+      <router-view class="gradient-custom" />
+      <SearchModal :movies="movies" :genres="genres" />
+    </div>
   </div>
 </template>
 
@@ -66,7 +64,6 @@ export default {
   },
   components: {
     SearchModal,
-
   },
   computed: {
     isLogin() {
@@ -78,9 +75,9 @@ export default {
       userId: null,
       myPage: "myPage",
       username: "",
-      isLoading: false,
-      movies:[],
-      genres:[],
+      isLoading: true,
+      movies: [],
+      genres: [],
     };
   },
   methods: {
@@ -114,16 +111,16 @@ export default {
           console.log(err);
         });
     },
-    getMovies(){
-      this.$store.dispatch('getMovies')
-      this.movies = this.$store.state.movies
-      this.$store.dispatch('getGenres')
-      this.genres = this.$store.state.genres
+    getMovies() {
+      this.$store.dispatch("getMovies");
+      this.movies = this.$store.state.movies;
+      this.$store.dispatch("getGenres");
+      this.genres = this.$store.state.genres;
     },
-    moveToMyPage(){
-      this.getUserData()
-      this.$router.push({name:'mypage', params: {user_id: this.userId}})
-    }
+    moveToMyPage() {
+      this.getUserData();
+      this.$router.push({ name: "mypage", params: { user_id: this.userId } });
+    },
   },
 };
 </script>

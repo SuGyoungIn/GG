@@ -47,13 +47,13 @@
           >
         </div>
         <div class="contain">
-
-
               <b-card
+              class="poster"
               v-for="movie in rec_movies" :key="movie.id"
                 :img-src= "baseUrl + movie.poster_path"
                 img-alt="Image"
                 overlay
+                @click="moveToDetail(movie.id)"
               ></b-card
             >
 
@@ -116,6 +116,10 @@ export default {
         }
       }
       this.searchWord()
+    },
+    moveToDetail(id){
+      this.$router.push({name:'detail', params: {movie_id: id}})
+      window.location.reload();
     }
   },
 };
@@ -125,5 +129,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(6,1fr);
 }
-
+.poster{
+  cursor: pointer;
+}
 </style>
