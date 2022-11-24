@@ -195,13 +195,12 @@ def get_sim_items(request):
     for key,value in sim.items():
         if value:
             this_movie=get_object_or_404(Movie,pk=key)
-            rec_movie_list.append({
-                'movie_id':key,
-                'poster_path':this_movie.poster_path,
-                'title':this_movie.title,
-                'sim':value
-            })
+            serializer=MovieSerializer(this_movie).data
+            serializer['sim']=value
+            rec_movie_list.append(serializer)
     rec_movie_list.sort(reverse=True,key=lambda x:x['sim'])
+
+    print(rec_movie_list)
     return Response(rec_movie_list)
 
 
