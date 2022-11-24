@@ -20,7 +20,7 @@
         </span>
         <h4 class="detail-text ml-3">{{ releaseDate }}</h4>
         <h5 class="detail-text ml-3">{{ movieDetailData?.runtime }}분</h5>
-        <LikeIcon class="like ml-3" />
+        <LikeIcon class="like ml-3" :movieId="movieId"/>
       </span>
 
       <p class="detail-text overview">
@@ -34,7 +34,7 @@
       </span>
 
       <div class="provider d-flex" >
-        <span class="detail-text">OTT 서비스 :</span>
+        <span class="detail-text mr-3">OTT 서비스 :</span>
         <WatchProvider :movieId="movieId" />
       </div>
       <p class="credit detail-text">등장인물</p>
@@ -172,11 +172,6 @@ export default {
 </script>
 <style scoped>
 #detail-page {
-  background: linear-gradient(
-    to right,
-    rgba(106, 17, 203, 1),
-    rgba(37, 117, 252, 1)
-  );
 }
 
 .hero-container {
@@ -224,22 +219,22 @@ export default {
 
 .genre {
   position: absolute;
-  top: 47%;
+  top: 55%;
   left: 10%;
 }
 .provider {
   position: absolute;
-  top: 47%;
+  top: 55%;
   left: 50%;
 }
 .credit {
   position: absolute;
-  top: 55%;
+  top: 65%;
   left: 10%;
 }
 .profiles {
   position: absolute;
-  top: 60%;
+  top: 70%;
   left: 10%;
 }
 .profile-container {

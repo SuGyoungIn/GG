@@ -32,7 +32,6 @@ export default {
           },
         });
         this.watchProviders = response.data.results.KR.flatrate;
-        console.log(this.watchProviders);
       } catch (error) {
         console.log(error);
       }

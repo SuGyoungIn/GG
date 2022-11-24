@@ -7,7 +7,7 @@
         label="Large Spinner"
       ></b-spinner>
     </div>
-    <!-- Navbar -->
+ <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
       <!-- Container wrapper -->
       <div class="container-fluid">
@@ -31,7 +31,7 @@
             >회원가입</router-link
           >
           <b-nav-item-dropdown :text="username" v-if="isLogin">
-            <b-dropdown-item @click="movePage(myPage)"
+            <b-dropdown-item @click="moveToMyPage"
               >마이페이지</b-dropdown-item
             >
             <b-dropdown-item @click="logOut">로그아웃</b-dropdown-item>
@@ -47,6 +47,7 @@
       </div>
       <!-- Container wrapper -->
     </nav>
+  </div>
     <!-- <div class="container" v-if="!isLoading">
       
     </div> -->
@@ -58,13 +59,14 @@
 <script>
 import axios from "axios";
 import SearchModal from "./components/SearchModal.vue";
+
 export default {
   created() {
-
     this.getUserData();
   },
   components: {
     SearchModal,
+
   },
   computed: {
     isLogin() {
@@ -73,7 +75,7 @@ export default {
   },
   data() {
     return {
-      user_id: 0,
+      userId: null,
       myPage: "myPage",
       username: "",
       isLoading: false,
@@ -87,16 +89,9 @@ export default {
         this.selectedGenres.push(genre);
       }
     },
-    movePage(destination) {
-      const userId = this.user_id;
-      if (destination === "myPage") {
-        this.$router.push({ name: "mypage", params: { user_id: userId } });
-      }
-    },
     logOut() {
       this.$store.dispatch("logOut");
     },
-
     getUserData() {
       const API_URL = "http://127.0.0.1:8000";
       this.isLoading = true;
@@ -110,9 +105,9 @@ export default {
         .then((res) => {
           this.$store.dispatch("pushUserData", res.data);
           this.username = res.data.username;
-          this.user_id = res.data.user_pk;
+          this.userId = res.data.id;
           this.isLoading = false;
-          console.log(this.isLoading)
+          console.log(this.isLoading);
         })
         .catch((err) => {
           this.isLoading = false;
@@ -120,12 +115,14 @@ export default {
         });
     },
     getMovies(){
-      console.log('여기 클릭됨')
       this.$store.dispatch('getMovies')
       this.movies = this.$store.state.movies
       this.$store.dispatch('getGenres')
       this.genres = this.$store.state.genres
     },
+    moveToMyPage(){
+      this.$router.push({name:'mypage', params: {user_id: this.userId}})
+    }
   },
 };
 </script>

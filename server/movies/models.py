@@ -26,7 +26,7 @@ class Movie(models.Model):
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE, related_name="comments")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_comments")
     content = models.TextField()
     stars = models.FloatField()
     recommends = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='recommends')      
