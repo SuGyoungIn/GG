@@ -66,6 +66,7 @@ export default {
           headers: {
             Authorization : token,
           },
+          data: {}
         })
         this.likeUsers = response.data.like_users
         console.log(response.data)

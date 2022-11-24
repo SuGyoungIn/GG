@@ -171,8 +171,6 @@ export default {
 };
 </script>
 <style scoped>
-#detail-page {
-}
 
 .hero-container {
   width: 100%;
