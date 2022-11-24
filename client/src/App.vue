@@ -15,7 +15,7 @@
         <div class="" id="navbarSupportedContent">
           <!-- Navbar brand -->
           <router-link to="/"
-            ><img src="/LOGO.png" alt="logo" style="width: 100px"
+            ><img src="/gglogo.png" alt="logo" style="width: 100px"
           /></router-link>
           <!-- Left links -->
         </div>
