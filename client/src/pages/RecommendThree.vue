@@ -1,55 +1,54 @@
 <template>
   <div class="recommend3 gradient-custom">
     <div class="contain">
-        <PosterCard v-for="(movie,idx) in rec_movies" :key="idx" :movie="movie" />
+      <PosterCard
+        v-for="(movie, idx) in rec_movies"
+        :key="idx"
+        :movie="movie"
+      />
     </div>
 
-    <h1>내가 좋아하는 장르</h1>
+    <h2>내가 좋아하는 장르</h2>
     <div class="chart-bg">
-    <BarChart />
+      <BarChart class="chart-body" />
     </div>
 
-    <h1>나의 장르별 평가</h1>
+    <h2>나의 장르별 평가</h2>
     <div class="chart-bg">
-    <BarChart2 />
+      <BarChart2 class="chart-body" />
     </div>
-
   </div>
-
-
-
-
 </template>
 <script>
-import PosterCard from "../components/PosterCard.vue" 
-import BarChart from '../components/BarChart.vue'
-import BarChart2 from '../components/BarChart.vue'
-import axios from "axios"
+import PosterCard from "../components/PosterCard.vue";
+import BarChart from "../components/BarChart.vue";
+import BarChart2 from "../components/BarChart.vue";
+import axios from "axios";
 
 export default {
-  props:{},
+  props: {},
   components: {
     PosterCard,
     BarChart,
     BarChart2,
   },
-  created(){
-    this.getMovies()
+  created() {
+    this.getMovies();
   },
-  computed:{
-    isLogin(){
-      return this.$store.getters.isLogin
-    }
+  computed: {
+    isLogin() {
+      return this.$store.getters.isLogin;
+    },
   },
-  data(){
-    return{
+  data() {
+    return {
       movies: [],
       rec_movies: [],
-    }
+    };
   },
   methods: {
-     async getMovies(){
-      if(this.isLogin){
+    async getMovies() {
+      if (this.isLogin) {
         const API_URL = "http://127.0.0.1:8000";
         this.isLoading = true;
         axios({
@@ -60,35 +59,33 @@ export default {
           },
         })
           .then((res) => {
-            this.rec_movies=res.data
-            console.log(this.rec_movies)
+            this.rec_movies = res.data;
+            console.log(this.rec_movies);
           })
           .catch((err) => {
             this.isLoading = false;
             console.log(err);
           });
       } else {
-        alert("로그인이 필요한 서비스 입니다.")
-        this.$router.push({name: 'login'})
+        alert("로그인이 필요한 서비스 입니다.");
+        this.$router.push({ name: "login" });
       }
-
-
-
     },
-
   },
-  
-}
+};
 </script>
 <style scoped>
 .recommend3 {
-  padding:0 10%;
+  color: #fff;
+  padding: 0 10%;
 }
-.contain{
+.contain {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
-.chart-bg{
-  background-color: #fff;
+.chart-bg {
+  position: relative;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.701);
 }
 </style>
