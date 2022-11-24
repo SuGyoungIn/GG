@@ -137,7 +137,9 @@ def get_sim_user(request):
             usermodel=get_object_or_404(get_user_model(),username=key)
             serializer = UserSerializer(usermodel).data
             serializer['cs']=value
-            rec.append(serializer)
+            if serializer not in rec and serializer['username']!=this_user:
+                rec.append(serializer)
+
     rec.sort(reverse=True,key=lambda x:x['cs'])
 
     return Response(rec)

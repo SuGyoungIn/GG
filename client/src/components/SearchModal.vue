@@ -91,8 +91,8 @@ export default {
       );
 
       if (this.selectedGenres.length>0){
-        let flag=0
         for (let i=this.rec_movies.length-1;i>=0;--i){
+          let flag=0
           for (let j=0;j<this.rec_movies[i].genre_ids.length;++j){
             if (this.selectedGenres.includes(this.rec_movies[i].genre_ids[j].name)){
               flag=1
