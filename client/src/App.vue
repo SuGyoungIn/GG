@@ -121,6 +121,7 @@ export default {
       this.genres = this.$store.state.genres
     },
     moveToMyPage(){
+      this.getUserData()
       this.$router.push({name:'mypage', params: {user_id: this.userId}})
     }
   },

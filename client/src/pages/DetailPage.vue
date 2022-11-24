@@ -82,6 +82,7 @@
     <div class="similar">
       <h4 class="detail-text">비슷한 영화</h4>
       <PosterCarousel :movieId="movieId" />
+      <CustomCarousel :movieId="movieId" />
     </div>
     <CommentList :movieId="movieId"/>
   </div>
@@ -92,6 +93,7 @@ import CommentList from "../components/CommentList.vue";
 import LikeIcon from "../components/LikeIcon.vue";
 import PosterCarousel from "../components/PosterCarousel.vue";
 import WatchProvider from "../components/WatchProvider.vue";
+import CustomCarousel from "../components/CustomCarousel.vue";
 export default {
   created() {
     this.getDetailMovieData(this.movieId), this.getMovieCredits(this.movieId);
@@ -101,6 +103,7 @@ export default {
     LikeIcon,
     PosterCarousel,
     WatchProvider,
+    CustomCarousel
   },
   data() {
     return {

@@ -2,8 +2,8 @@
   
   <div class="recommend1 gradient-custom">
     
-    <div><button @click="suffle">suffle</button></div>
-    <div class="container">
+    <div><b-button @click="suffle">랜덤 선택</b-button></div>
+    <div class="contain">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
   </div>

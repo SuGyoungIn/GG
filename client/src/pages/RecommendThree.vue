@@ -1,6 +1,6 @@
 <template>
   <div class="recommend3 gradient-custom">
-    <div class="container">
+    <div class="contain">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
   </div>
@@ -44,7 +44,7 @@ export default {
 .recommend3 {
   padding:0 10%;
 }
-.container{
+.contain{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
