@@ -10,6 +10,7 @@ import RecommendTwo from '../pages/RecommendTwo.vue'
 import RecommendThree from '../pages/RecommendThree.vue'
 import DetailPage from '../pages/DetailPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
+import CreateArticle from '../pages/CreateArticle.vue'
 import FindUser from '../pages/FindUser.vue'
 
 
@@ -65,6 +66,11 @@ const routes = [
     path: '/article/:article_id',
     name: 'article',
     component: ArticlePage
+  },
+  {
+    path: '/createArticle',
+    name: 'createArticle',
+    component: CreateArticle
   },
   {
     path: '/finduser',

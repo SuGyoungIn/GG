@@ -5,7 +5,8 @@
     <div class="community-banner d-flex justify-content-center align-items-center">
       <b-button class="find-btn" @click="moveToFindUser">유저 찾으러 가기 ></b-button>
     </div>
-    <ArticleList class="mt-5"/>
+    <b-btn class="mt-3" @click="moveToCreateArticle">글쓰러 가기</b-btn>
+    <ArticleList class="mt-3"/>
   </div>
 </template>
 <script>
@@ -30,9 +31,11 @@ export default {
       }
     },
     moveToFindUser(){
-
       this.$router.push({ name: "finduser"})
     },
+    moveToCreateArticle(){
+      this.$router.push({ name: "createArticle"})
+    }
   },
 };
 </script>
