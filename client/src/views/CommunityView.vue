@@ -1,6 +1,7 @@
 <template>
   <div id="community-view">
     <h1>커뮤니티</h1>
+
     <div class="community-banner d-flex justify-content-center align-items-center">
       <b-button class="find-btn" @click="moveToFindUser">유저 찾으러 가기 ></b-button>
     </div>
@@ -29,9 +30,9 @@ export default {
       }
     },
     moveToFindUser(){
+
       this.$router.push({ name: "finduser"})
     },
-    
   },
 };
 </script>

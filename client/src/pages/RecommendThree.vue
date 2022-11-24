@@ -2,13 +2,13 @@
   <div id="recommend3">
     <h2>{{ username }}님이 좋아할만한 영화</h2>
     <div class="contain mb-5">
+
       <PosterCard
         v-for="(movie, idx) in rec_movies"
         :key="idx"
         :movie="movie"
       />
     </div>
-
     <div class="mb-5">
       <h2>{{ username }}님이 좋아하는 장르 지표</h2>
       <div class="chart-bg">
@@ -123,7 +123,6 @@ export default {
             this.isLoading = false;
             console.log(err);
           });
-
         axios({
           method: "get",
           url: `${API_URL}/movies/get_sim_items/`,
@@ -150,6 +149,7 @@ export default {
 #recommend3 {
   color: #fff;
   padding: 2rem 10%;
+
 }
 .contain {
   display: grid;
