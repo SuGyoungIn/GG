@@ -15,11 +15,18 @@
         <b-dropdown-item @click="changeFilter(3)">좋아요 순</b-dropdown-item>
         <b-dropdown-item @click="changeFilter(4)">최신영화 순</b-dropdown-item>
       </b-dropdown>
+      <b-dropdown :text="cnt +'개'">
+        <b-dropdown-item @click="changeCnt(24)">24개 보기</b-dropdown-item>
+        <b-dropdown-item @click="changeCnt(48)">48개 보기</b-dropdown-item>
+        <b-dropdown-item @click="changeCnt(96)">96개 보기</b-dropdown-item>
+        <b-dropdown-item @click="changeCnt(192)">192개 보기</b-dropdown-item>
+        <b-dropdown-item @click="changeCnt(384)">384개 보기</b-dropdown-item>
+      </b-dropdown>
       </div>
     </div>
 
     <div class="contain">
-      <PosterCard v-for="(movie,idx) in selectedGenreMovies" :key="idx" :movie="movie" />
+      <PosterCard v-for="(movie,idx) in on_view_movies" :key="idx" :movie="movie" />
     </div>
   </div>
 </template>
@@ -38,6 +45,8 @@ export default {
       filter:"평점 높은 순",
       selectedGenre: "전체",
       selectedGenreMovies: [],
+      on_view_movies:[],
+      cnt:24,
       sorted_movies: {
         "전체": {
           "vote_average": [],
@@ -183,14 +192,6 @@ export default {
     };
   },
   methods: {
-    onSlideStart(slide) {
-      this.sliding = true;
-      console.log(slide);
-    },
-    onSlideEnd(slide) {
-      this.sliding = false;
-      console.log(slide);
-    },
     getMovies() {
       this.$store.dispatch("getMovies");
       this.movies = this.$store.state.movies;
@@ -224,16 +225,18 @@ export default {
         this.sorted_movies[gen]["like_users"].sort(
           (a,b) => b.like_users.length-a.like_users.length
         );
-        console.log(this.sorted_movies[gen]["release_date"])
         this.sorted_movies[gen]["release_date"].sort(
           (a,b) => b.release_date-a.release_date
         );
-        console.log(this.sorted_movies[gen]["release_date"])
+        this.on_view_movies=this.selectedGenreMovies.slice(0,this.cnt)
+      
       }
     },
     changeGenre(genre) {
       this.selectedGenreMovies = this.sorted_movies[genre]["vote_average"]
       this.selectedGenre = genre
+      this.on_view_movies=this.selectedGenreMovies.slice(0,this.cnt)
+      
     },
     changeFilter(filter) {
       console.log(filter)
@@ -255,6 +258,14 @@ export default {
         this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["release_date"]
         this.filter = "최신영화 순"
       }
+
+      this.on_view_movies=this.selectedGenreMovies.slice(0,this.cnt)
+      
+    },
+    changeCnt(c){
+      this.cnt=c
+      this.on_view_movies=this.selectedGenreMovies.slice(0,this.cnt)
+
     }
   },
 };

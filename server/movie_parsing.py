@@ -14,7 +14,7 @@ query={
 
 
 total_res=[]
-for i in range(1,2):
+for i in range(1,51):
     query['page']=i
     response = requests.get(base_url+url,params=query).json()
 
@@ -30,6 +30,6 @@ for i in range(1,2):
 pprint.pprint(total_res)
 print(len(total_res))
 
-with open('./movie_top20.json','w',encoding="utf-8") as f:
+with open('./movie_top1000.json','w',encoding="utf-8") as f:
     json.dump(total_res,f,indent="\t", ensure_ascii=False)
 

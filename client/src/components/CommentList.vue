@@ -68,7 +68,7 @@ export default {
         this.userName = this.$store.state.userData.username;
         this.preHolder = "댓글을 입력하세요"
       } else {
-        this.userName = "익명의 어피치";
+        this.userName = "익명";
         this.preHolder = "로그인 이후 이용이 가능합니다."
       }
     },
