@@ -52,6 +52,7 @@ export default {
 #ArticlePage {
   padding: 2rem 10%;
   color: #fff;
+  height: calc(100vh - 72px);
 }
 
 .divider {

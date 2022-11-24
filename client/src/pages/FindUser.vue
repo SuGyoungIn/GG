@@ -1,45 +1,24 @@
 <template>
-  <div id="find_user">
-    <h1>{{ username }}님의 페이지</h1>
-    <div class="d-flex justify-content-">
-      <b-avatar :text="username"></b-avatar>
+  <div id="findUser">
+    <h1>{{ username }}님과 비슷한 유저 찾기</h1>
 
-      <div class="ml-5 pt-4">
-        <p class="detail-text">ID : {{ username }}</p>
-        <p class="detail-text">EMAIL : {{ userData.email }}</p>
+    <div v-if="!isLoading" class="movie-container">
+      <div v-if="likeMovieData.length < 5">
+        <p>좋아요를 누른 영화 너무 적습니다.</p>
+        <b-btn @click="moveToRecommend" >좋아요 누르러 가기</b-btn>
       </div>
-    </div>
-    <div class="d-flex my-4">
-      <h3 class="mr-4" @click="showList(1)">좋아요 영화목록</h3>
-      <h3 @click="showList(2)">댓글 영화목록</h3>
-    </div>
 
-    <div v-if="show" class="movie-container">
-      <p v-if="likeMovieData.length === 0">좋아요를 누른 영화가 없습니다.</p>
-      <div v-if="likeMovieData" class="movie-container">
-        <PosterCard
-          v-for="(movie, key) in likeMovieData"
-          :movie="movie"
-          :key="key"
-        />
-      </div>
-    </div>
-
-    <div v-if="!show">
-      <p v-if="commentMovieData.length === 0">댓글을 쓴 영화가 없습니다.</p>
-      <div v-if="commentMovieData" class="movie-container">
-        <PosterCard
-          v-for="(movie, key) in commentMovieData"
-          :movie="movie.movie"
-          :key="key"
-        />
+      <div v-if="likeMovieData.length >= 5">
+        <p>{{ username }}님과 비슷한 유저 목록</p>
+        <div class="d-flex">
+        <div v-for="user, key in simUser" :key="key" @click="moveToUserPage(user.id)" class="mr-3 user">
+        <b-avatar :text="username.slice(0,3)" ></b-avatar>
+        </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-
-
 
 <script>
 import axios from "axios";
@@ -54,9 +33,11 @@ export default {
   },
   data() {
     return {
-      isLoading:true,
-      username:'',
-    }
+      isLoading: true,
+      username: "",
+      simUser: [],
+      likeMovieData: 0,
+    };
   },
 
   methods: {
@@ -64,11 +45,10 @@ export default {
       if (this.isLogin) {
         const API_URL = "http://127.0.0.1:8000";
         this.username = this.$store.state.userData.username;
+        this.likeMovieData = this.$store.state.userData.like_movies;
         this.isLoading = true;
-        
 
         await axios({
-
           method: "get",
           url: `${API_URL}/movies/get_sim_user/`,
           headers: {
@@ -76,9 +56,8 @@ export default {
           },
         })
           .then((res) => {
-            console.log(res)
-            this.isLoading = false
-
+            this.isLoading = false;
+            this.simUser = res.data;
           })
           .catch((err) => {
             this.isLoading = false;
@@ -89,9 +68,25 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
+    moveToRecommend(){
+      this.$router.push({ name: "recommend2"})
+    },
+    moveToUserPage(id){
+      console.log(id)
+      this.$router.push({ name: "mypage", params: {user_id : id}})
+    }
+
   },
-}
+};
 </script>
 <style scoped>
+#findUser {
+  padding: 2rem 10%;
+  color: #fff;
+  height: calc(100vh - 72px);
+}
 
+.user {
+  cursor: pointer;
+}
 </style>

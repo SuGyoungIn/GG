@@ -2,11 +2,15 @@
   <div id="community-view">
     <h1>커뮤니티</h1>
 
-    <div class="community-banner d-flex justify-content-center align-items-center">
-      <b-button class="find-btn" @click="moveToFindUser">유저 찾으러 가기 ></b-button>
+    <div
+      class="community-banner d-flex justify-content-center align-items-center"
+    >
+      <b-button class="find-btn" @click="moveToFindUser"
+        >유저 찾으러 가기 ></b-button
+      >
     </div>
     <b-btn class="mt-3" @click="moveToCreateArticle">글쓰러 가기</b-btn>
-    <ArticleList class="mt-3"/>
+    <ArticleList class="mt-3" />
   </div>
 </template>
 <script>
@@ -30,36 +34,34 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
-    moveToFindUser(){
-      this.$router.push({ name: "finduser"})
+    moveToFindUser() {
+      this.$router.push({ name: "finduser" });
     },
-    moveToCreateArticle(){
-      this.$router.push({ name: "createArticle"})
-    }
+    moveToCreateArticle() {
+      this.$router.push({ name: "createArticle" });
+    },
   },
 };
 </script>
 <style scoped>
-
 #community-view {
   padding: 2rem 10%;
   color: #fff;
+  height: calc(100vh - 72px);
 }
 .community-banner {
   width: 100%;
   height: 30vh;
-  background-image: url('/public/img/bannerImg.jpeg');
+  background-image: url("/public/img/bannerImg.jpeg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.find-btn{
-height: 4vw;
+.find-btn {
+  height: 4vw;
 }
 
 .find-btn::after {
   content: "";
-  
 }
-
 </style>
