@@ -40,6 +40,7 @@
 <script>
 // import axios from "axios";
 import PosterCard from "../components/PosterCard.vue";
+import axios from "axios"
 export default {
   created() {
     this.getUserData();
@@ -60,12 +61,25 @@ export default {
       likeMovieData: [],
       commentMovieData: [],
       show: true,
+      userId: this.$route.params.user_id
     };
   },
   methods: {
-    getUserData() {
+    async getUserData() {
       if (this.isLogin) {
-        this.userData = this.$store.state.userData;
+        const API_URL = `http://127.0.0.1:8000/username/${this.userId}`;
+        
+        await axios({
+          method: 'get',
+          url: API_URL,
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`,
+          }
+        })
+        .then((response) => {
+          console.log(response.data)
+          this.userData = response.data
+        })
         this.username = this.userData.username;
         this.likeMovieData = this.userData.like_movies;
         this.commentMovieData = this.userData.user_comments;

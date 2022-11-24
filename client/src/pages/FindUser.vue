@@ -12,7 +12,7 @@
         <p>{{ username }}님과 비슷한 유저 목록</p>
         <div class="d-flex">
         <div v-for="user, key in simUser" :key="key" @click="moveToUserPage(user.id)" class="mr-3 user">
-        <b-avatar :text="username.slice(0,3)" ></b-avatar>
+        <b-avatar :text="user.username.slice(0,3)" ></b-avatar>
         </div>
         </div>
       </div>
