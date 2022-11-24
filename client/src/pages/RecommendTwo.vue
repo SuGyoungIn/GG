@@ -1,30 +1,43 @@
 <template>
   <div id="recommend2">
-    <div>
+    <div class="d-flex justify-content-between">
       <h2>
         {{ selectedGenre }}
       </h2>
+      <div>
       <b-dropdown text="장르 선택">
-        <b-dropdown-item v-for="value ,genre ,key of sorted_movies" :key="key" @click="changeView(key)">{{ genre }} </b-dropdown-item>
+        <b-dropdown-item v-for="value,genre,key of sorted_movies" :key="key" @click="changeGenre(genre)">{{ genre }} </b-dropdown-item>
       </b-dropdown>
+      <b-dropdown :text="filter">
+        <b-dropdown-item @click="changeFilter(0)">평점 높은 순</b-dropdown-item>
+        <b-dropdown-item @click="changeFilter(1)">평가 많은 순</b-dropdown-item>
+        <b-dropdown-item @click="changeFilter(2)">인기도 순</b-dropdown-item>
+        <b-dropdown-item @click="changeFilter(3)">좋아요 순</b-dropdown-item>
+        <b-dropdown-item @click="changeFilter(4)">최신영화 순</b-dropdown-item>
+      </b-dropdown>
+      </div>
     </div>
 
-    <div>
-      
+    <div class="contain">
+      <PosterCard v-for="(movie,idx) in selectedGenreMovies" :key="idx" :movie="movie" />
     </div>
   </div>
 </template>
 
 <script>
+import PosterCard from "../components/PosterCard.vue"
 export default {
   created() {
-    this.getMovies();
+    this.getMovies()
+    this.changeGenre("전체")
   },
+  components: {PosterCard},
   data() {
     return {
       movies: [],
+      filter:"평점 높은 순",
       selectedGenre: "전체",
-      showGenre: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      selectedGenreMovies: [],
       sorted_movies: {
         "전체": {
           "vote_average": [],
@@ -216,9 +229,29 @@ export default {
         );
       }
     },
-    changeView(genre_number) {
-      if(genre_number){
-        return
+    changeGenre(genre) {
+      this.selectedGenreMovies = this.sorted_movies[genre]["vote_average"]
+      this.selectedGenre = genre
+    },
+    changeFilter(filter) {
+      console.log(filter)
+      console.log(this.selectedGenreMovies)
+      if(filter === 0){
+        this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["vote_average"]
+        this.filter = "평점 높은 순"
+        console.log(this.selectedGenreMovies)
+      } else if(filter === 1) {
+        this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["vote_count"]
+        this.filter = "평가 많은 순"
+      } else if(filter === 2){
+        this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["popular"]
+        this.filter = "인기도 순"
+      } else if(filter === 3) {
+        this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["like_users"]
+        this.filter = "좋아요 순"
+      } else if(filter === 4) {
+        this.selectedGenreMovies = this.sorted_movies[this.selectedGenre]["release_date"]
+        this.filter = "최신영화 순"
       }
     }
   },
@@ -228,5 +261,9 @@ export default {
 #recommend2 {
   padding: 2rem 10%;
   color: #fff;
+}
+.contain{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
 }
 </style>
