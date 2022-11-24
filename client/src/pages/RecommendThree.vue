@@ -4,6 +4,10 @@
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
   </div>
+
+
+
+
 </template>
 <script>
 import PosterCard from "../components/PosterCard.vue" 
