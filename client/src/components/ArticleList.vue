@@ -1,6 +1,6 @@
 <template>
   <div id="articleList">
-    <b-table hover :items="articles" :fields="fields">
+    <b-table hover :items="articles" :fields="fields" dark head-variant="light">
       <template #cell(인덱스)="data">
         {{ data.index + 1 }}
       </template>
@@ -18,7 +18,7 @@
 
       <template #cell(작성시간)="data">
         <p class="article" @click="moveTo(data.item.id)">
-          {{ data.item.updated_at }}
+          {{ data.item.updated_at.slice(0,10) }}
         </p>
       </template>
     </b-table>
@@ -36,6 +36,7 @@ export default {
     return {
       articles: [],
       fields: ["인덱스", "제목", "작성자", "작성시간"],
+      updated_at: ""
     };
   },
   components: {},
