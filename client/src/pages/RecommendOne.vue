@@ -1,5 +1,8 @@
 <template>
+  
   <div class="recommend1 gradient-custom">
+    
+    <div><button @click="suffle">suffle</button></div>
     <div class="container">
         <PosterCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
     </div>
@@ -24,10 +27,14 @@ export default {
     }
   },
   methods: {
-     getMovies(){
+    getMovies(){
       this.$store.dispatch('getMovies')
       this.movies = this.$store.state.movies
+      this.suffle()
     },
+    suffle(){
+      this.movies.sort(()=>Math.random()-0.5)
+    }
   },
   
 }

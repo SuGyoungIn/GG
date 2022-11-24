@@ -42,10 +42,9 @@ export default {
         const response = await axios.get(API_URL, {
           headers: {
             Authorization : token,
-          },
+          }
         })
         this.likeUsers = response.data.like_users
-        console.log('token 있음')
         if(this.isLogin){
           this.userId = this.$store.state.userData.id
           this.likeUsers.forEach(element => {
@@ -62,10 +61,10 @@ export default {
       const API_URL = `http://127.0.0.1:8000/movies/${id}/likes/`;
       const token = `Token ${this.$store.state.token}`
       try{
-        const response = await axios.post(API_URL, {
+        const response = await axios.post(API_URL, {},{
           headers: {
             Authorization : token,
-          },
+          }
         })
         this.likeUsers = response.data.like_users
         console.log(response.data)

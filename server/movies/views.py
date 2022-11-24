@@ -46,7 +46,6 @@ def movie_likes(request,movie_pk):
         if movie.like_users.filter(pk=request.user.pk).exists():
             movie.like_users.remove(request.user.pk)
         else:
-            print("add됨")
             movie.like_users.add(request.user.pk)
         serializer=MovieSerializer(movie)
         return Response(serializer.data,status=status.HTTP_200_OK)
