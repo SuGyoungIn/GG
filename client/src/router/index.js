@@ -10,6 +10,7 @@ import RecommendTwo from '../pages/RecommendTwo.vue'
 import RecommendThree from '../pages/RecommendThree.vue'
 import DetailPage from '../pages/DetailPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
+import FindUser from '../pages/FindUser.vue'
 
 
 Vue.use(VueRouter)
@@ -64,7 +65,12 @@ const routes = [
     path: '/article/:article_id',
     name: 'article',
     component: ArticlePage
-  }
+  },
+  {
+    path: '/finduser',
+    name: 'finduser',
+    component: FindUser
+  },
 ]
 
 const router = new VueRouter({

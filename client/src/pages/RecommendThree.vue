@@ -10,12 +10,16 @@
 
     <h1>내가 좋아한 장르 지표</h1>
     <div class="chart-bg">
+
       <BarChart v-if="!isLoading" :genredata1="genredata1" />
+
     </div>
 
     <h1>내가 평가하는 장르 지표</h1>
     <div class="chart-bg">
+
       <BarChart2 v-if="!isLoading" :genredata2="genredata2" />
+
     </div>
   </div>
 </template>
@@ -33,8 +37,10 @@ export default {
     BarChart2,
   },
   created() {
+
     this.getData();
     this.getRecMovies();
+
   },
   computed: {
     isLogin() {
@@ -75,12 +81,13 @@ export default {
   },
   methods: {
     async getData() {
-
       if (this.isLogin) {
         const API_URL = "http://127.0.0.1:8000";
         this.isLoading = true;
         
+
         await axios({
+
           method: "get",
           url: `${API_URL}/username/`,
           headers: {
@@ -88,6 +95,11 @@ export default {
           },
         })
           .then((res) => {
+            for (let idx1 in res.data.like_movies) {
+              for (let idx2 in res.data.like_movies[idx1].genre_ids) {
+                this.genredata1[this.NtoG[res.data.like_movies[idx1].genre_ids[idx2]]]++;
+              }
+            }
             for (let idx1 in res.data.user_comments) {
               for (let idx2 in res.data.user_comments[idx1].movie.genre_ids) {
                 this.genredata2_sub1[this.NtoG[res.data.user_comments[idx1].movie.genre_ids[idx2]]]++;
@@ -105,6 +117,7 @@ export default {
             }
             console.log(this.genredata1,this.genredata2)
             this.isLoading = false
+
           })
           .catch((err) => {
             this.isLoading = false;
@@ -139,13 +152,12 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
-
-
   },
 };
 </script>
 <style scoped>
 .recommend3 {
+  color: #fff;
   padding: 0 10%;
 }
 .contain {
@@ -153,6 +165,8 @@ export default {
   grid-template-columns: repeat(6, 1fr);
 }
 .chart-bg {
-  background-color: #fff;
+  position: relative;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.701);
 }
 </style>
