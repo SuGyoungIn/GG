@@ -10,14 +10,15 @@
       />
     </div>
 
-    <h1>{{ username }}님이 좋아하는 장르 지표</h1>
+    <h2>{{ username }}님이 좋아하는 장르 지표</h2>
     <div class="chart-bg">
 
       <BarChart v-if="!isLoading" :genredata1="genredata1" />
 
     </div>
-
-    <h1>{{ username }}님이 평가한 장르 지표</h1>
+    <br>
+    <br>
+    <h2>{{ username }}님이 평가한 장르 지표</h2>
     <div class="chart-bg">
 
       <BarChart2 v-if="!isLoading" :genredata2="genredata2" />
@@ -152,6 +153,7 @@ export default {
         })
           .then((res) => {
             this.rec_movies = res.data;
+            console.log(res)
           })
           .catch((err) => {
             this.isLoading = false;
